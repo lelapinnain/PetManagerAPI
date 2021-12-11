@@ -50,11 +50,6 @@ namespace PetManager.Models
                 entity.Property(e => e.BreedId).HasDefaultValueSql("((1))");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<VaccineHistory>(entity =>
             {
                 entity.Property(e => e.VaccineHistoryId).ValueGeneratedNever();

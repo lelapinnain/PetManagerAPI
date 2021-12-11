@@ -2,13 +2,13 @@
 
 namespace PetManager.Models.NonQueries
 {
-    public class PetInfoInsert : AbstractNonQuery<String>
+    public class PetInfoInsertQuery : AbstractNonQuery<String>
     {
         private readonly CoreDbContext db;
         private AddPetInfoInputDTO addPetInfoInputDto;
         private String response;
 
-       public PetInfoInsert(AddPetInfoInputDTO _addPetInfoInputDto) {
+       public PetInfoInsertQuery(AddPetInfoInputDTO _addPetInfoInputDto) {
             addPetInfoInputDto = _addPetInfoInputDto;
             db = new CoreDbContext();
         }

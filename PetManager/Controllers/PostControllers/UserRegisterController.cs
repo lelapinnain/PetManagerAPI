@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.Models.NonQueries;
-using PetManager.Models.Quereies;
 
 namespace PetManager.Controllers.PostControllers
 {
-    public class AddPetInfoController : AbstractControllerPost<AddPetInfoInputDTO>
+    public class UserRegisterController : AbstractControllerPost<UserCredentailsDTO>
     {
-        [Route("PetManager/AddPetInfo")]
-        public override IActionResult Post([FromBody] AddPetInfoInputDTO input)
+        [Route("PetManager/Register")]
+        public override IActionResult Post([FromBody] UserCredentailsDTO input)
         {
             try
             {
@@ -17,20 +17,20 @@ namespace PetManager.Controllers.PostControllers
                 {
                     throw new ArgumentException();
                 }
-                PetInfoInsertQuery petInfoInsert = new PetInfoInsertQuery(input);
-            petInfoInsert.RunQuery();
+                RegisterUserQuery registerUser = new RegisterUserQuery(input);
+                registerUser.RunQuery();
 
-            
-          
 
-            if (petInfoInsert.GetResult() == "ok")
-            {
-                return Ok(petInfoInsert.GetResult());
-            }
-            else
-            {
-                return BadRequest("Pet Not Inserted");
-            }
+
+
+                if (registerUser.GetResult() == "ok")
+                {
+                    return Ok(registerUser.GetResult());
+                }
+                else
+                {
+                    return BadRequest("Pet Not Inserted");
+                }
             }
             catch (InvalidOperationException ex)
             {
