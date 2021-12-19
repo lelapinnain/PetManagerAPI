@@ -6,11 +6,13 @@ namespace PetManager.DTOs.Mappers
     public class GetPetInfoByIDMapper : AbstractMapper<GetPetInfoOutputDTO>
     {
         private PetInfo petInfo;
+        private List<VaccinationView> vaccinations;
         private GetPetInfoOutputDTO? getPetInfoOutput;
 
-        public GetPetInfoByIDMapper(PetInfo _petInfo)
+        public GetPetInfoByIDMapper(PetInfo _petInfo, List<VaccinationView> _vaccinations)
         {
             petInfo = _petInfo;
+            vaccinations = _vaccinations;    
 
             getPetInfoOutput = null;
         }
@@ -30,6 +32,7 @@ namespace PetManager.DTOs.Mappers
                 getPetInfoOutput.TransportationPrice = petInfo.TransportationPrice;
                 getPetInfoOutput.Gender = petInfo.Gender;
                 getPetInfoOutput.Color = petInfo.Color; 
+                getPetInfoOutput.Vaccinations = vaccinations;
             }
 
             return getPetInfoOutput;

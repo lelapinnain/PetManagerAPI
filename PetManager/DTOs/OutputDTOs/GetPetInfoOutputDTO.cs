@@ -1,4 +1,6 @@
-﻿namespace PetManager.DTOs.OutputDTOs
+﻿using PetManager.Models;
+
+namespace PetManager.DTOs.OutputDTOs
 {
     public class GetPetInfoOutputDTO
     {
@@ -28,5 +30,7 @@
         public int? PetTypeId { get; set; }
 
         public int? BreederId { get; set; }
+
+        public List<VaccinationView>? Vaccinations { get; set; }
     }
 }

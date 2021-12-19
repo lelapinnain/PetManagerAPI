@@ -3,43 +3,28 @@ using PetManager.Models;
 
 namespace PetManager.DTOs.Mappers
 {
-    public class GetAllPetInfoMapper : AbstractMapper<List<GetPetInfoOutputDTO>>
+    public class GetUserInfoMapper : AbstractMapper<GetUserInfoOutputDTO>
     {
-        private List<PetInfo> petInfoList;
-        private List<GetPetInfoOutputDTO>? getPetInfoOutputList;
+        private GetUserInfoOutputDTO getUserInfoOutputDTO;
+        private User user;
+        private string token;
 
-        public GetAllPetInfoMapper(List<PetInfo> _petInfoList)
+        public GetUserInfoMapper(User _user, string _token)
         {
-            petInfoList = _petInfoList;
+            user = _user;
+            token = _token;
 
-            getPetInfoOutputList = null;
+            getUserInfoOutputDTO = new GetUserInfoOutputDTO();
         }
 
-        public override List<GetPetInfoOutputDTO> GetMappedDTO()
+        public override GetUserInfoOutputDTO GetMappedDTO()
         {
-            if (petInfoList != null)
-            {
-                getPetInfoOutputList = new List<GetPetInfoOutputDTO>();
+            getUserInfoOutputDTO.FirstName = user.FirstName;
+            getUserInfoOutputDTO.LastName = user.LastName;
+            getUserInfoOutputDTO.Email = user.Email;
+            getUserInfoOutputDTO.token = token;
 
-                foreach (PetInfo petInfo in petInfoList)
-                {
-                    GetPetInfoOutputDTO getPetInfoOutput = new GetPetInfoOutputDTO();
-                    getPetInfoOutput.petId = petInfo.PetId;
-                    getPetInfoOutput.PetName = petInfo.PetName;
-                    getPetInfoOutput.BuyPrice = petInfo.BuyPrice;
-                    getPetInfoOutput.BreedId = petInfo.BreedId;
-                    getPetInfoOutput.Dob = petInfo.Dob;
-                    getPetInfoOutput.Microchip = petInfo.Microchip;
-                    getPetInfoOutput.Images = petInfo.Images;
-                    getPetInfoOutput.TransportationPrice = petInfo.TransportationPrice;
-                    getPetInfoOutput.Gender = petInfo.Gender;
-                    getPetInfoOutput.Color = petInfo.Color;
-
-                    getPetInfoOutputList.Add(getPetInfoOutput);
-                }
-            }
-
-            return getPetInfoOutputList;
+            return getUserInfoOutputDTO;
         }
     }
 }

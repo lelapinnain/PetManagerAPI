@@ -20,6 +20,7 @@ namespace PetManager.Models
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<VaccinationView> VaccinationViews { get; set; } = null!;
         public virtual DbSet<VaccineHistory> VaccineHistories { get; set; } = null!;
         public virtual DbSet<VaccineInfo> VaccineInfos { get; set; } = null!;
 
@@ -38,8 +39,6 @@ namespace PetManager.Models
             {
                 entity.HasKey(e => e.BreedId)
                     .HasName("PK__Table__D1E9AE9DB59864B2");
-
-                entity.Property(e => e.BreedId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<PetInfo>(entity =>
@@ -48,19 +47,40 @@ namespace PetManager.Models
                     .HasName("PK__PetInfo__48E53862F69AE395");
 
                 entity.Property(e => e.BreedId).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.Breed)
+                    .WithMany(p => p.PetInfos)
+                    .HasForeignKey(d => d.BreedId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PetInfo_BreedInfo");
+            });
+
+            modelBuilder.Entity<VaccinationView>(entity =>
+            {
+                entity.ToView("VaccinationView");
             });
 
             modelBuilder.Entity<VaccineHistory>(entity =>
             {
                 entity.Property(e => e.VaccineHistoryId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.PetInfo)
+                    .WithMany(p => p.VaccineHistories)
+                    .HasForeignKey(d => d.PetInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VaccineHistory_PetInfo");
+
+                entity.HasOne(d => d.Vaccine)
+                    .WithMany(p => p.VaccineHistories)
+                    .HasForeignKey(d => d.VaccineId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VaccineHistory_VaccineInfo");
             });
 
             modelBuilder.Entity<VaccineInfo>(entity =>
             {
                 entity.HasKey(e => e.VaccineId)
                     .HasName("PK__VaccineI__45DC6889925BF0F7");
-
-                entity.Property(e => e.VaccineId).ValueGeneratedNever();
             });
 
             OnModelCreatingPartial(modelBuilder);

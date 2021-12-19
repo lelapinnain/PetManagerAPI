@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.DTOs.Mappers;
 using PetManager.DTOs.OutputDTOs;
@@ -9,6 +10,7 @@ namespace PetManager.Controllers.GetControllers
 {
     public class GetPetInfoController : AbstractControllerGet<GetPetInfoInputDTO>
     {
+        
         [Route("PetManager/GetPetInfo")]
         public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
         {
@@ -22,7 +24,10 @@ namespace PetManager.Controllers.GetControllers
                 GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(input.PetId);
                 getPetInfoByIDQuery.RunQuery();
 
-                GetPetInfoByIDMapper getPetInfoByIDMapper = new GetPetInfoByIDMapper(getPetInfoByIDQuery.GetResult());
+                GetPetInfoVaccinationQuery getPetInfoVaccinationQuery = new GetPetInfoVaccinationQuery(input.PetId);
+                getPetInfoVaccinationQuery.RunQuery();
+
+                GetPetInfoByIDMapper getPetInfoByIDMapper = new GetPetInfoByIDMapper(getPetInfoByIDQuery.GetResult(), getPetInfoVaccinationQuery.GetResult());
                 GetPetInfoOutputDTO getPetInfoOutputDTO = getPetInfoByIDMapper.GetMappedDTO();
 
                 if (getPetInfoOutputDTO != null)

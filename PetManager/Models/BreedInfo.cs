@@ -9,6 +9,11 @@ namespace PetManager.Models
     [Table("BreedInfo")]
     public partial class BreedInfo
     {
+        public BreedInfo()
+        {
+            PetInfos = new HashSet<PetInfo>();
+        }
+
         [Key]
         public int BreedId { get; set; }
         [StringLength(150)]
@@ -17,5 +22,8 @@ namespace PetManager.Models
         [StringLength(10)]
         [Unicode(false)]
         public string? BreedSize { get; set; }
+
+        [InverseProperty(nameof(PetInfo.Breed))]
+        public virtual ICollection<PetInfo> PetInfos { get; set; }
     }
 }

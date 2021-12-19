@@ -25,7 +25,9 @@ namespace PetManager.Models.NonQueries
             var hash = new PasswordHasher<object?>().HashPassword(null, userCredential.Password);
             User NewUser = new User()
             {
-                Email = userCredential.UserName,
+                Email = userCredential.Email,
+                FirstName = userCredential.FirstName,
+                LastName = userCredential.LastName,
                 Password = hash,
                 
             };

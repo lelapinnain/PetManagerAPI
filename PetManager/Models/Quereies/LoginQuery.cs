@@ -11,6 +11,7 @@ namespace PetManager.Models.Quereies
         private UserCredentailsDTO userCredential;
         private string _token;
         private readonly IJwtAuth jwtAuth;
+     
         public LoginQuery(UserCredentailsDTO _userCredential , IJwtAuth jwtAuth)
         {
             this.jwtAuth = jwtAuth;
@@ -22,7 +23,7 @@ namespace PetManager.Models.Quereies
 
         public override void RunQuery()
         {
-            user = db.Users.Where(user => user.Email == userCredential.UserName).SingleOrDefault();
+            user = db.Users.Where(user => user.Email == userCredential.Email).SingleOrDefault();
             if (user != null)
             {
                // var hashedPassword = new PasswordHasher<object?>().HashPassword(null, userCredential.Password);
@@ -48,6 +49,10 @@ namespace PetManager.Models.Quereies
         public override string GetResult()
         {
             return _token;
+        }
+        public User CustomerInfo()
+        {
+            return user;
         }
     }
 }

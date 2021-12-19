@@ -24,5 +24,12 @@ namespace PetManager.Models
         public bool? IsDone { get; set; }
         [Column(TypeName = "date")]
         public DateTime? ActualDate { get; set; }
+
+        [ForeignKey(nameof(PetInfoId))]
+        [InverseProperty("VaccineHistories")]
+        public virtual PetInfo PetInfo { get; set; } = null!;
+        [ForeignKey(nameof(VaccineId))]
+        [InverseProperty(nameof(VaccineInfo.VaccineHistories))]
+        public virtual VaccineInfo Vaccine { get; set; } = null!;
     }
 }

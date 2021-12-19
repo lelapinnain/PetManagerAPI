@@ -9,6 +9,11 @@ namespace PetManager.Models
     [Table("PetInfo")]
     public partial class PetInfo
     {
+        public PetInfo()
+        {
+            VaccineHistories = new HashSet<VaccineHistory>();
+        }
+
         [Key]
         public int PetId { get; set; }
         public string PetName { get; set; } = null!;
@@ -31,5 +36,11 @@ namespace PetManager.Models
         public bool IsSold { get; set; }
         public int? PetTypeId { get; set; }
         public int? BreederId { get; set; }
+
+        [ForeignKey(nameof(BreedId))]
+        [InverseProperty(nameof(BreedInfo.PetInfos))]
+        public virtual BreedInfo Breed { get; set; } = null!;
+        [InverseProperty(nameof(VaccineHistory.PetInfo))]
+        public virtual ICollection<VaccineHistory> VaccineHistories { get; set; }
     }
 }
