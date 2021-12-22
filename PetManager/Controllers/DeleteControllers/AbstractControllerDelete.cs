@@ -6,6 +6,6 @@ namespace PetManager.Controllers.DeleteControllers
     public abstract class AbstractControllerDelete<T> : ControllerBase
     {
         [HttpDelete]
-        public abstract IActionResult Get([FromQuery] T input);
+        public abstract IActionResult Delete([FromBody] T input);
     }
 }

@@ -1,15 +1,13 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.Models.NonQueries;
 
 namespace PetManager.Controllers.DeleteControllers
 {
-    public class DeletePetInfoController:AbstractControllerDelete<int>
+    public class DeleteVaccination : AbstractControllerDelete<int>
     {
-        [Route("PetManager/DeletePetInfo")]
-        //public override IActionResult Delete([FromBody] GetPetInfoInputDTO input)
-        public override IActionResult Delete([FromBody] int PetId)
+        [Route("PetManager/DeleteVaccination")]
+        public override IActionResult Delete([FromBody] int id)
         {
             try
             {
@@ -19,12 +17,12 @@ namespace PetManager.Controllers.DeleteControllers
                     throw new ArgumentException();
                 }
 
-                DeletePetInfoByIDQuery DeletePetInfoByIDQuery = new DeletePetInfoByIDQuery(PetId);
-                DeletePetInfoByIDQuery.RunQuery();
+                DeleteVaccineByIDQuery deleteVaccineByIDQuery = new DeleteVaccineByIDQuery(id);
+                deleteVaccineByIDQuery.RunQuery();
 
-                if (DeletePetInfoByIDQuery != null)
+                if (deleteVaccineByIDQuery.GetResult() != null)
                 {
-                    return Ok(DeletePetInfoByIDQuery.GetResult());
+                    return Ok(deleteVaccineByIDQuery.GetResult());
                 }
                 else
                 {
@@ -38,7 +36,7 @@ namespace PetManager.Controllers.DeleteControllers
                 return StatusCode(500, "An error occured");
             }
 
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 return BadRequest(ModelState);
             }

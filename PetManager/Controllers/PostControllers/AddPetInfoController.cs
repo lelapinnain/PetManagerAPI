@@ -37,8 +37,8 @@ namespace PetManager.Controllers.PostControllers
 
 
 
-                //if (petInfoInsert.GetResult() == "ok")
-                if (true)
+                if (petInfoInsert.GetResult() == "ok")
+
                 {
                     //return Ok(petInfoInsert.GetResult());
                     return Ok();

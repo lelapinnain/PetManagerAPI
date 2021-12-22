@@ -62,8 +62,6 @@ namespace PetManager.Models
 
             modelBuilder.Entity<VaccineHistory>(entity =>
             {
-                entity.Property(e => e.VaccineHistoryId).ValueGeneratedNever();
-
                 entity.HasOne(d => d.PetInfo)
                     .WithMany(p => p.VaccineHistories)
                     .HasForeignKey(d => d.PetInfoId)
