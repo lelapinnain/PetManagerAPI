@@ -5,11 +5,11 @@ using PetManager.Models.NonQueries;
 
 namespace PetManager.Controllers.DeleteControllers
 {
-    public class DeletePetInfoController:AbstractControllerDelete<int>
+    public class DeletePetInfoController:AbstractControllerDelete<GetPetInfoInputDTO>
     {
         [Route("PetManager/DeletePetInfo")]
-        //public override IActionResult Delete([FromBody] GetPetInfoInputDTO input)
-        public override IActionResult Delete([FromBody] int PetId)
+        public override IActionResult Delete([FromBody] GetPetInfoInputDTO input)
+       // public override IActionResult Delete([FromBody] int PetId)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace PetManager.Controllers.DeleteControllers
                     throw new ArgumentException();
                 }
 
-                DeletePetInfoByIDQuery DeletePetInfoByIDQuery = new DeletePetInfoByIDQuery(PetId);
+                DeletePetInfoByIDQuery DeletePetInfoByIDQuery = new DeletePetInfoByIDQuery( input.PetId);
                 DeletePetInfoByIDQuery.RunQuery();
 
                 if (DeletePetInfoByIDQuery != null)

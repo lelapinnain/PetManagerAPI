@@ -15,10 +15,13 @@ namespace PetManager.Models
         public string? Name { get; set; }
         [Column("date", TypeName = "date")]
         public DateTime? Date { get; set; }
-        [Column("notes")]
         [StringLength(150)]
         [Unicode(false)]
         public string? Notes { get; set; }
         public int PetInfoId { get; set; }
+        [Column("id")]
+        public int Id { get; set; }
+        [Column("vId")]
+        public int VId { get; set; }
     }
 }
