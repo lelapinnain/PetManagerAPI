@@ -2,7 +2,7 @@
 {
     public class AddVaccinationInputDTO
     {
-        public int VInfoID { get; set; }
+        public int VHistoryID { get; set; }
         public int PetId { get; set; }
         public int VaccinationId { get; set; }
         public DateTime VaccinationDate { get; set; }

@@ -12,7 +12,7 @@ namespace PetManager.Models.NonQueries
 
         public UpdateVaccinationByIDQuery(AddVaccinationInputDTO _addVaccinationInputDTO)
         {
-            vaccinationId = _addVaccinationInputDTO.VInfoID;
+            vaccinationId = _addVaccinationInputDTO.VHistoryID;
             addVaccinationInputDTO = _addVaccinationInputDTO;
 
             db = new CoreDbContext();
