@@ -16,26 +16,25 @@ namespace PetManager.Controllers.PostControllers
         {
             try
             {
-                var base64Data = Regex.Match(input.Images, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
-                var binData = Convert.FromBase64String(base64Data);
+                #region Create Image
+                //  var base64Data = Regex.Match(input.Images, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+                // var binData = Convert.FromBase64String(base64Data);
 
-                System.IO.File.WriteAllBytes("E:\\TestFile.png", binData);
+                // System.IO.File.WriteAllBytes("E:\\TestFile.png", binData);
 
                 //string base64 = System.Convert.ToBase64String(b);
                 //b = Encoding.ASCII.GetBytes(base64);
                 //var txtStream = new MemoryStream(b);
                 // check the input DTO validation
+                #endregion
+
+
                 if (!ModelState.IsValid)
                 {
                     throw new ArgumentException();
                 }
                 PetInfoInsertQuery petInfoInsert = new PetInfoInsertQuery(input);
                 petInfoInsert.RunQuery();
-
-
-                // var request = HttpContext.Request;
-
-
 
                 if (petInfoInsert.GetResult() == "ok")
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.Mappers;
 using PetManager.DTOs.OutputDTOs;
+using PetManager.ErrorHandlers;
 using PetManager.Models.Quereies;
 
 namespace PetManager.Controllers.GetControllers
@@ -24,7 +25,8 @@ namespace PetManager.Controllers.GetControllers
             }
             else
             {
-                return BadRequest("Pet Not Found");
+                //return BadRequest("Pet Not Found");
+                return BadRequest(new GetRequestError("No Data Found").GetResponse());
             }
         }
     }

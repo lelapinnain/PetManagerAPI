@@ -7,6 +7,11 @@
             SUCCESS = 100,
             ERROR_INVALID_VACCINE = 200,
 
+            GET_REQUEST_ERROR = 300,
+            POST_REQUEST_ERROR = 400,
+            PUT_REQUEST_ERROR = 500,
+            DELETE_REQUEST_ERROR = 600,
+
             ERROR_NOT_SET = 999
         }
 

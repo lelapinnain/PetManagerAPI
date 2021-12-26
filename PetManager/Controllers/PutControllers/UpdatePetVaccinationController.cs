@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
+using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
+using PetManager.Utilities;
 
 namespace PetManager.Controllers.PutControllers
 {
@@ -16,19 +18,27 @@ namespace PetManager.Controllers.PutControllers
                 {
                     throw new ArgumentException();
                 }
-                UpdateVaccinationByIDQuery updateVaccinationByIDQuery = new UpdateVaccinationByIDQuery(input);
-                updateVaccinationByIDQuery.RunQuery();
 
-                
+                ValidateVaccines validateVaccines = new ValidateVaccines(input.VaccinationDate, input.PetId, input.VaccinationId);
+                APIResponse response = validateVaccines.Execute();
 
-
-                if (updateVaccinationByIDQuery.GetResult() != null)
+                if (response.Code == APIResponse.ErrorCode.SUCCESS)
                 {
-                    return Ok(updateVaccinationByIDQuery.GetResult());
+                    UpdateVaccinationByIDQuery updateVaccinationByIDQuery = new UpdateVaccinationByIDQuery(input);
+                    updateVaccinationByIDQuery.RunQuery();
+
+                    if (updateVaccinationByIDQuery.GetResult() != null)
+                    {
+                        return Ok(updateVaccinationByIDQuery.GetResult());
+                    }
+                    else
+                    {
+                        return BadRequest("Vaccine Not Updated");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Vaccine Not Updated");
+                    return BadRequest(response);
                 }
             }
             catch (InvalidOperationException ex)
