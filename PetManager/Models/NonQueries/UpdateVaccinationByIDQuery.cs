@@ -27,24 +27,33 @@ namespace PetManager.Models.NonQueries
         }
         public override void RunQuery()
         {
-            vaccineHistory = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccinationId).SingleOrDefault();
-            if (vaccineHistory != null)
+            try
             {
-                vaccineHistory.VaccineId = addVaccinationInputDTO.VaccinationId;
-                vaccineHistory.VaccineDate = addVaccinationInputDTO.VaccinationDate;
-                vaccineHistory.Notes = addVaccinationInputDTO.Notes;
+                vaccineHistory = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccinationId).SingleOrDefault();
+                if (vaccineHistory != null)
+                {
+                    vaccineHistory.VaccineId = addVaccinationInputDTO.VaccinationId;
+                    vaccineHistory.VaccineDate = addVaccinationInputDTO.VaccinationDate;
+                    vaccineHistory.Notes = addVaccinationInputDTO.Notes;
 
-                db.Update(vaccineHistory);
-                db.SaveChanges();
+                    db.Update(vaccineHistory);
+                    db.SaveChanges();
 
-                response = "ok";
+                    response = "ok";
 
 
+                }
+                else
+                {
+                       response = "Vaccination Not Found";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //   response = "PetInfo Not Found";
+
+               response = ex.Message;
             }
+          
 
         }
     }

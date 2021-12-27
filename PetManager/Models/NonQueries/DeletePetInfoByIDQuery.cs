@@ -4,7 +4,7 @@
     {
         private readonly CoreDbContext db;
         private int petId;
- 
+
         private String response;
 
         public DeletePetInfoByIDQuery(int _petId)
@@ -13,26 +13,36 @@
 
             db = new CoreDbContext();
 
-            
+
         }
 
         public override void RunQuery()
         {
 
-            PetInfo pet = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
-            if(pet != null)
+            try
             {
-                db.Remove(pet);
-                db.SaveChanges();
-                response = "ok";
+                PetInfo pet = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
+                if (pet != null)
+                {
+                    db.Remove(pet);
+                    db.SaveChanges();
+                    response = "ok";
+
+                }
+                else
+                {
+                    response = "PetInfo Not Found";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                response = "PetInfo Not Found";
+
+                response = ex.Message;
             }
-           
-            
-           
+
+
+
+
         }
 
         public override string GetResult()

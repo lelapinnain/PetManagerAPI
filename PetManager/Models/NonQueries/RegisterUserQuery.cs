@@ -21,19 +21,38 @@ namespace PetManager.Models.NonQueries
         }
         public override void RunQuery()
         {
-            //var hash = SecurePasswordHasher.Hash(userCredential.Password);
-            var hash = new PasswordHasher<object?>().HashPassword(null, userCredential.Password);
-            User NewUser = new User()
+            var user = db.Users.Where(u=> u.Email == userCredential.Email).FirstOrDefault();
+            if(user == null)
             {
-                Email = userCredential.Email,
-                FirstName = userCredential.FirstName,
-                LastName = userCredential.LastName,
-                Password = hash,
-                
-            };
-            db.Add(NewUser);
-            db.SaveChanges();
-            response = "ok";
+                try
+                {
+                    var hash = new PasswordHasher<object?>().HashPassword(null, userCredential.Password);
+                    User NewUser = new User()
+                    {
+                        Email = userCredential.Email,
+                        FirstName = userCredential.FirstName,
+                        LastName = userCredential.LastName,
+                        Password = hash,
+
+                    };
+                    db.Add(NewUser);
+                    db.SaveChanges();
+                    response = "ok";
+                }
+                catch (Exception ex)
+                {
+
+                   response = ex.Message;
+                }
+               
+               
+            }
+            else
+            {
+                response = "User Already Exists";
+            }
+            
+           
         }
         public override string GetResult()
         {

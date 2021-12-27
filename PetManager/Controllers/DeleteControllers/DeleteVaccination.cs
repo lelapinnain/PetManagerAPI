@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
+using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
 
 namespace PetManager.Controllers.DeleteControllers
 {
     public class DeleteVaccination : AbstractControllerDelete<DeleteVaccineDTO>
     {
+        [Authorize]
         [Route("PetManager/DeleteVaccination")]
         public override IActionResult Delete([FromBody] DeleteVaccineDTO input)
         {
@@ -26,19 +29,20 @@ namespace PetManager.Controllers.DeleteControllers
                 }
                 else
                 {
-                    return BadRequest("Pet Not Found");
+                    return BadRequest(new GetRequestError("Vaccination Not Found").GetResponse());
+
                 }
             }
             catch (InvalidOperationException ex)
             {
                 // TODO: log the error
 
-                return StatusCode(500, "An error occured");
+                return BadRequest(new GetRequestError(ex.ToString()).GetResponse());
             }
 
             catch (ArgumentException)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new GetRequestError(ModelState.Values.Where(w => w.Errors.Count > 0).First().Errors.First().ErrorMessage).GetResponse());
             }
 
         }

@@ -8,6 +8,7 @@ namespace PetManager.Models.NonQueries
         private int petId;
         private PetInfo? petInfo;
         private UpdatePetInfoDTO updatePetInfoDTO;
+        private String response;
 
         public UpdatePetInfoByIDQuery(UpdatePetInfoDTO _UpdatePetInfoInputDto)
         {
@@ -22,29 +23,34 @@ namespace PetManager.Models.NonQueries
 
         public override void RunQuery()
         {
-
-            petInfo = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
-            if (petInfo != null)
+            try
             {
-                petInfo.PetName = updatePetInfoDTO.PetName;
-                petInfo.Color = updatePetInfoDTO.Color;
-                petInfo.Dob=updatePetInfoDTO.Dob;
-                petInfo.BuyPrice = updatePetInfoDTO.BuyPrice;
-                petInfo.Gender = updatePetInfoDTO.Gender;
-                petInfo.Microchip = updatePetInfoDTO.Microchip;
-                petInfo.TransportationPrice = updatePetInfoDTO.TransportationPrice;
+                petInfo = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
+                if (petInfo != null)
+                {
+                    petInfo.PetName = updatePetInfoDTO.PetName;
+                    petInfo.Color = updatePetInfoDTO.Color;
+                    petInfo.Dob = updatePetInfoDTO.Dob;
+                    petInfo.BuyPrice = updatePetInfoDTO.BuyPrice;
+                    petInfo.Gender = updatePetInfoDTO.Gender;
+                    petInfo.Microchip = updatePetInfoDTO.Microchip;
+                    petInfo.TransportationPrice = updatePetInfoDTO.TransportationPrice;
 
-                db.Update(petInfo);
-                db.SaveChanges();
+                    db.Update(petInfo);
+                    db.SaveChanges();
 
-               
-
-
+                }
+                else
+                {
+                       response = "Pet Not Found";
+                }
             }
-            else
+            catch (Exception ex)
             {
-             //   response = "PetInfo Not Found";
+
+                response = ex.Message;
             }
+           
 
 
 

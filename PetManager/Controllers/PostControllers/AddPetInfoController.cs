@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
+using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
 using PetManager.Models.Quereies;
 using System.Text;
@@ -10,6 +12,7 @@ namespace PetManager.Controllers.PostControllers
 {
     public class AddPetInfoController : AbstractControllerPost<AddPetInfoInputDTO>
     {
+        [Authorize]
         [Route("PetManager/AddPetInfo")]
         public override IActionResult Post([FromBody] AddPetInfoInputDTO input)
         //  public override IActionResult Post()
@@ -44,19 +47,20 @@ namespace PetManager.Controllers.PostControllers
                 }
                 else
                 {
-                    return BadRequest("Pet Not Inserted");
+                    return BadRequest(new GetRequestError("Pet Not Inserted").GetResponse());
                 }
             }
             catch (InvalidOperationException ex)
             {
                 // TODO: log the error
 
-                return StatusCode(500, "An error occured");
+                return BadRequest(new GetRequestError(ex.ToString()).GetResponse());
             }
 
             catch (ArgumentException)
             {
                 return BadRequest(ModelState);
+                //return BadRequest(new GetRequestError(ModelState).GetResponse());
             }
         }
     }

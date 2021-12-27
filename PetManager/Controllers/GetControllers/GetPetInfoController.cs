@@ -11,7 +11,7 @@ namespace PetManager.Controllers.GetControllers
 {
     public class GetPetInfoController : AbstractControllerGet<GetPetInfoInputDTO>
     {
-        
+        [Authorize]
         [Route("PetManager/GetPetInfo")]
         public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
         {

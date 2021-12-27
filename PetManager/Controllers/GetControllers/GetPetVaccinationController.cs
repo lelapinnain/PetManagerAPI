@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
+using PetManager.ErrorHandlers;
 using PetManager.Models;
 using PetManager.Models.Quereies;
 
@@ -7,6 +9,7 @@ namespace PetManager.Controllers.GetControllers
 {
     public class GetPetVaccinationController : AbstractControllerGet<GetPetInfoInputDTO>
     {
+        [Authorize]
         [Route("PetManager/VaccinationInfo")]
         public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
         {
@@ -29,19 +32,19 @@ namespace PetManager.Controllers.GetControllers
                 }
                 else
                 {
-                    return BadRequest("No Data Found");
+                    return BadRequest(new GetRequestError("No Data Found").GetResponse());
                 }
             }
             catch (InvalidOperationException ex)
             {
                 // TODO: log the error
 
-                return StatusCode(500, "An error occured");
+                return BadRequest(new GetRequestError(ex.ToString()).GetResponse());
             }
 
             catch (ArgumentException)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new GetRequestError(ModelState.Values.Where(w => w.Errors.Count > 0).First().Errors.First().ErrorMessage).GetResponse());
             }
         }
     }

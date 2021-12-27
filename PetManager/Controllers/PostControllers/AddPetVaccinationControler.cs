@@ -9,12 +9,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 using PetManager.ErrorHandlers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PetManager.Controllers.PostControllers
 {
     public class AddPetVaccinationControler : AbstractControllerPost<AddVaccinationInputDTO>
     {
-
+        [Authorize]
         [Route("PetManager/AddVaccination")]
        
 
@@ -65,7 +66,7 @@ namespace PetManager.Controllers.PostControllers
                     }
                     else
                     {
-                        return BadRequest("Pet Not Inserted");
+                        return BadRequest(new GetRequestError("Vaccination Not Inserted").GetResponse());
                     }
                 }
                 else
@@ -77,7 +78,7 @@ namespace PetManager.Controllers.PostControllers
             {
                 // TODO: log the error
 
-                return StatusCode(500, "An error occured");
+                return BadRequest(new GetRequestError(ex.ToString()).GetResponse());
             }
 
             catch (ArgumentException)

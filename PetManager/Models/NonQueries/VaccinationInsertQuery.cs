@@ -15,19 +15,27 @@ namespace PetManager.Models.NonQueries
         }
         public override void RunQuery()
         {
-            VaccineHistory vaccineHistory = new VaccineHistory()
+            try
             {
-                VaccineId = addVaccinationInputDTO.VaccinationId,
-                VaccineDate = addVaccinationInputDTO.VaccinationDate,
-                Notes = addVaccinationInputDTO.Notes,
-                PetInfoId = addVaccinationInputDTO.PetId,
-                IsDone=true
-               
-            
-            };
-            db.Add(vaccineHistory);
-            db.SaveChanges();
-            response = "ok";
+                VaccineHistory vaccineHistory = new VaccineHistory()
+                {
+                    VaccineId = addVaccinationInputDTO.VaccinationId,
+                    VaccineDate = addVaccinationInputDTO.VaccinationDate,
+                    Notes = addVaccinationInputDTO.Notes,
+                    PetInfoId = addVaccinationInputDTO.PetId,
+                    IsDone = true
+
+
+                };
+                db.Add(vaccineHistory);
+                db.SaveChanges();
+                response = "ok";
+            }
+            catch (Exception ex)
+            {
+
+               response = ex.Message;
+           
         }
         public override string GetResult()
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
@@ -8,6 +9,7 @@ namespace PetManager.Controllers.PutControllers
 {
     public class UpdatePetVaccinationController : AbstractControllerPut<AddVaccinationInputDTO>
     {
+        [Authorize]
         [Route("PetManager/UpdateVaccination")]
         public override IActionResult Put([FromBody] AddVaccinationInputDTO input)
         {
@@ -33,7 +35,7 @@ namespace PetManager.Controllers.PutControllers
                     }
                     else
                     {
-                        return BadRequest("Vaccine Not Updated");
+                        return BadRequest(new GetRequestError("Vaccine Not Updated").GetResponse());
                     }
                 }
                 else
@@ -45,7 +47,7 @@ namespace PetManager.Controllers.PutControllers
             {
                 // TODO: log the error
 
-                return StatusCode(500, "An error occured");
+                return BadRequest(new GetRequestError(ex.ToString()).GetResponse());
             }
 
             catch (ArgumentException)

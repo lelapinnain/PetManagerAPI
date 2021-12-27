@@ -9,24 +9,35 @@ namespace PetManager.Models.NonQueries
         private String response;
 
        public PetInfoInsertQuery(AddPetInfoInputDTO _addPetInfoInputDto) {
+
             addPetInfoInputDto = _addPetInfoInputDto;
             db = new CoreDbContext();
+
         }
         public override void RunQuery()
         {
-         PetInfo petInfo = new PetInfo()
-         {
-             PetName = addPetInfoInputDto.PetName,
-             Color = addPetInfoInputDto.Color,
-             Dob = addPetInfoInputDto.Dob,
-             Gender = addPetInfoInputDto.Gender, 
-             Images = addPetInfoInputDto.Images,
-             BuyPrice = addPetInfoInputDto.BuyPrice,
-             Microchip = addPetInfoInputDto.Microchip,
-         };
-            db.Add(petInfo);
-            db.SaveChanges();
-            response = "ok";
+            try
+            {
+                PetInfo petInfo = new PetInfo()
+                {
+                    PetName = addPetInfoInputDto.PetName,
+                    Color = addPetInfoInputDto.Color,
+                    Dob = addPetInfoInputDto.Dob,
+                    Gender = addPetInfoInputDto.Gender,
+                    Images = addPetInfoInputDto.Images,
+                    BuyPrice = addPetInfoInputDto.BuyPrice,
+                    Microchip = addPetInfoInputDto.Microchip,
+                };
+                db.Add(petInfo);
+                db.SaveChanges();
+                response = "ok";
+            }
+            catch (Exception ex )
+            {
+
+                response = ex.Message;
+            }
+        
         }
         public override string GetResult()
         {

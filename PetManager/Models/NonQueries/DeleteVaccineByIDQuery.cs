@@ -18,18 +18,26 @@
 
         public override void RunQuery()
         {
+            try
+            {
+                VaccineHistory? vaccine = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccineId).SingleOrDefault();
+                if (vaccine != null)
+                {
+                    db.Remove(vaccine);
+                    db.SaveChanges();
+                    response = "ok";
+                }
+                else
+                {
+                    response = "Vaccine Record Not Found";
+                }
+            }
+            catch (Exception ex )
+            {
 
-            VaccineHistory? vaccine = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccineId).SingleOrDefault();
-            if (vaccine != null)
-            {
-                db.Remove(vaccine);
-                db.SaveChanges();
-                response = "ok";
+               response=ex.Message;
             }
-            else
-            {
-                response = "Vaccine Record Not Found";
-            }
+           
 
 
 

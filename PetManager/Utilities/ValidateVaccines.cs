@@ -48,6 +48,10 @@ namespace PetManager.Utilities
             {
                 vaccineValidations = new ValidateINTRATRAC3(vaccineHistories, vaccinationDate, petInfo.Dob);
             }
+            if (vaccinationId == Convert.ToInt32(vaccinationType.RABIES))
+            {
+                vaccineValidations = new ValidateRABIES(vaccineHistories, vaccinationDate, petInfo.Dob);
+            }
 
             if (vaccineValidations != null)
             {
