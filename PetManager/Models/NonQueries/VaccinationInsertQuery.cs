@@ -34,8 +34,8 @@ namespace PetManager.Models.NonQueries
             catch (Exception ex)
             {
 
-               response = ex.Message;
-           
+                response = ex.Message;
+            }
         }
         public override string GetResult()
         {

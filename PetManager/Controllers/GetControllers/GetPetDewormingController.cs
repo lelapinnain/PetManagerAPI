@@ -2,16 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.ErrorHandlers;
-using PetManager.Models.NonQueries;
+using PetManager.Models;
+using PetManager.Models.Quereies;
 
-namespace PetManager.Controllers.DeleteControllers
+namespace PetManager.Controllers.GetControllers
 {
-    public class DeleteVaccination : AbstractControllerDelete<DeleteVaccineDTO>
+    public class GetPetDewormingController : AbstractControllerGet<GetPetInfoInputDTO>
     {
         [Authorize]
-        [Route("PetManager/DeleteVaccination")]
-        public override IActionResult Delete([FromBody] DeleteVaccineDTO input)
+        [Route("PetManager/VaccinationInfo")]
+        public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
         {
+            // return Ok();
             try
             {
                 // check the input DTO validation
@@ -19,18 +21,18 @@ namespace PetManager.Controllers.DeleteControllers
                 {
                     throw new ArgumentException();
                 }
+                GetPetInfoDewormingQuery getPetInfoDewormingQuery = new GetPetInfoDewormingQuery(input.PetId);
+                getPetInfoDewormingQuery.RunQuery();
 
-                DeleteVaccineByIDQuery deleteVaccineByIDQuery = new DeleteVaccineByIDQuery(input.Id);
-                deleteVaccineByIDQuery.RunQuery();
+                List<DewormingView> dewormings = getPetInfoDewormingQuery.GetResult();
 
-                if (deleteVaccineByIDQuery.GetResult() != null)
+                if (dewormings.Count != 0)
                 {
-                    return Ok(deleteVaccineByIDQuery.GetResult());
+                    return Ok(dewormings);
                 }
                 else
                 {
-                    return BadRequest(new GetRequestError("Vaccination Not Found").GetResponse());
-
+                    return BadRequest(new GetRequestError("No Data Found").GetResponse());
                 }
             }
             catch (InvalidOperationException ex)
@@ -44,7 +46,6 @@ namespace PetManager.Controllers.DeleteControllers
             {
                 return BadRequest(new GetRequestError(ModelState.Values.Where(w => w.Errors.Count > 0).First().Errors.First().ErrorMessage).GetResponse());
             }
-
         }
     }
 }

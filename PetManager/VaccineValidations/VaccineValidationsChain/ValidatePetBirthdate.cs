@@ -27,7 +27,7 @@ namespace PetManager.VaccineValidations.VaccineValidationsChain
             }
             else
             {
-                response = new Vaccination_InvalidBirthdateSpan().GetResponse();
+                response = new Vaccination_InvalidBirthdateSpan(dateSpan).GetResponse();
                 return response;
             }
 

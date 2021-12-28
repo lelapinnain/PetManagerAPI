@@ -17,6 +17,9 @@ namespace PetManager.Models
         }
 
         public virtual DbSet<BreedInfo> BreedInfos { get; set; } = null!;
+        public virtual DbSet<DewormingHistory> DewormingHistories { get; set; } = null!;
+        public virtual DbSet<DewormingInfo> DewormingInfos { get; set; } = null!;
+        public virtual DbSet<DewormingView> DewormingViews { get; set; } = null!;
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -39,6 +42,28 @@ namespace PetManager.Models
             {
                 entity.HasKey(e => e.BreedId)
                     .HasName("PK__Table__D1E9AE9DB59864B2");
+            });
+
+            modelBuilder.Entity<DewormingHistory>(entity =>
+            {
+                entity.Property(e => e.DewormingHistoryId).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Deworming)
+                    .WithMany()
+                    .HasForeignKey(d => d.DewormingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DewormingHistory_DewormingInfo");
+
+                entity.HasOne(d => d.PetInfo)
+                    .WithMany()
+                    .HasForeignKey(d => d.PetInfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DewormingHistory_PetInfo");
+            });
+
+            modelBuilder.Entity<DewormingView>(entity =>
+            {
+                entity.ToView("DewormingView");
             });
 
             modelBuilder.Entity<PetInfo>(entity =>
