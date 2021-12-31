@@ -46,16 +46,14 @@ namespace PetManager.Models
 
             modelBuilder.Entity<DewormingHistory>(entity =>
             {
-                entity.Property(e => e.DewormingHistoryId).ValueGeneratedOnAdd();
-
                 entity.HasOne(d => d.Deworming)
-                    .WithMany()
+                    .WithMany(p => p.DewormingHistories)
                     .HasForeignKey(d => d.DewormingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DewormingHistory_DewormingInfo");
 
                 entity.HasOne(d => d.PetInfo)
-                    .WithMany()
+                    .WithMany(p => p.DewormingHistories)
                     .HasForeignKey(d => d.PetInfoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DewormingHistory_PetInfo");

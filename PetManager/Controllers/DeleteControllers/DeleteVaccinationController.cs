@@ -8,7 +8,7 @@ namespace PetManager.Controllers.DeleteControllers
 {
     public class DeleteVaccinationController : AbstractControllerDelete<DeleteVaccineDTO>
     {
-        [Authorize]
+        
         [Route("PetManager/DeleteVaccination")]
         public override IActionResult Delete([FromBody] DeleteVaccineDTO input)
         {

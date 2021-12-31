@@ -32,5 +32,8 @@ namespace PetManager.DTOs.OutputDTOs
         public int? BreederId { get; set; }
 
         public List<VaccinationView>? Vaccinations { get; set; }
+
+        public List<DewormingView>? Deworming { get; set; }
+        
     }
 }

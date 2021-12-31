@@ -7,13 +7,14 @@ namespace PetManager.DTOs.Mappers
     {
         private PetInfo petInfo;
         private List<VaccinationView> vaccinations;
+        private List<DewormingView> deworming;
         private GetPetInfoOutputDTO? getPetInfoOutput;
 
-        public GetPetInfoByIDMapper(PetInfo _petInfo, List<VaccinationView> _vaccinations)
+        public GetPetInfoByIDMapper(PetInfo _petInfo, List<VaccinationView> _vaccinations , List<DewormingView> _Deworming)
         {
             petInfo = _petInfo;
-            vaccinations = _vaccinations;    
-
+            vaccinations = _vaccinations;
+            deworming= _Deworming;
             getPetInfoOutput = null;
         }
 
@@ -33,6 +34,7 @@ namespace PetManager.DTOs.Mappers
                 getPetInfoOutput.Gender = petInfo.Gender;
                 getPetInfoOutput.Color = petInfo.Color; 
                 getPetInfoOutput.Vaccinations = vaccinations;
+                getPetInfoOutput.Deworming = deworming;
             }
 
             return getPetInfoOutput;

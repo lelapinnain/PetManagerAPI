@@ -34,7 +34,7 @@ namespace PetManager.Controllers.PostControllers
                 }
                 else
                 {
-                    return BadRequest(new GetRequestError("Vaccination Not Inserted").GetResponse());
+                    return BadRequest(new GetRequestError("Deworming Not Inserted").GetResponse());
                 }
 
             }

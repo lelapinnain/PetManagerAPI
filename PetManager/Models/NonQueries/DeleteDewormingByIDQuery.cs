@@ -25,7 +25,7 @@
         {
             try
             {
-                DewormingHistory? deworming = db.DewormingHistories.Where(v => v.DewormingId == dewormingId).SingleOrDefault();
+                DewormingHistory? deworming = db.DewormingHistories.Where(v => v.DewormingHistoryId == dewormingId).SingleOrDefault();
                 if (deworming != null)
                 {
                     db.Remove(deworming);

@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PetManager.Models
 {
-    [Keyless]
     [Table("DewormingHistory")]
     public partial class DewormingHistory
     {
+        [Key]
         public int DewormingHistoryId { get; set; }
         public int PetInfoId { get; set; }
         public int DewormingId { get; set; }
@@ -19,8 +19,10 @@ namespace PetManager.Models
         public DateTime? DewormingEndDate { get; set; }
 
         [ForeignKey(nameof(DewormingId))]
+        [InverseProperty(nameof(DewormingInfo.DewormingHistories))]
         public virtual DewormingInfo Deworming { get; set; } = null!;
         [ForeignKey(nameof(PetInfoId))]
+        [InverseProperty("DewormingHistories")]
         public virtual PetInfo PetInfo { get; set; } = null!;
     }
 }

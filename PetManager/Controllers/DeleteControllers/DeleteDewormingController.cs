@@ -6,11 +6,11 @@ using PetManager.Models.NonQueries;
 
 namespace PetManager.Controllers.DeleteControllers
 {
-    public class DeleteDewormingController : AbstractControllerDelete<DeleteVaccineDTO>
+    public class DeleteDewormingController : AbstractControllerDelete<DeleteDewormingDTO>
     {
-        [Authorize]
+        
         [Route("PetManager/DeleteDeworming")]
-        public override IActionResult Delete([FromBody] DeleteVaccineDTO input)
+        public override IActionResult Delete([FromBody] DeleteDewormingDTO input)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace PetManager.Controllers.DeleteControllers
                     throw new ArgumentException();
                 }
 
-                DeleteDewormingByIDQuery deleteDewormingByIDQuery = new DeleteDewormingByIDQuery(input.Id);
+                DeleteDewormingByIDQuery deleteDewormingByIDQuery = new DeleteDewormingByIDQuery(input.DewormingHistoryId);
                 deleteDewormingByIDQuery.RunQuery();
 
                 if (deleteDewormingByIDQuery.GetResult() != null)

@@ -28,7 +28,10 @@ namespace PetManager.Controllers.GetControllers
                 GetPetInfoVaccinationQuery getPetInfoVaccinationQuery = new GetPetInfoVaccinationQuery(input.PetId);
                 getPetInfoVaccinationQuery.RunQuery();
 
-                GetPetInfoByIDMapper getPetInfoByIDMapper = new GetPetInfoByIDMapper(getPetInfoByIDQuery.GetResult(), getPetInfoVaccinationQuery.GetResult());
+                GetPetInfoDewormingQuery getPetInfoDewormingQuery = new GetPetInfoDewormingQuery(input.PetId);
+                getPetInfoDewormingQuery.RunQuery();
+
+                GetPetInfoByIDMapper getPetInfoByIDMapper = new GetPetInfoByIDMapper(getPetInfoByIDQuery.GetResult(), getPetInfoVaccinationQuery.GetResult(), getPetInfoDewormingQuery.GetResult());
                 GetPetInfoOutputDTO getPetInfoOutputDTO = getPetInfoByIDMapper.GetMappedDTO();
 
                 if (getPetInfoOutputDTO != null)
