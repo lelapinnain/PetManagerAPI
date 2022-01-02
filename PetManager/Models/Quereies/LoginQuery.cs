@@ -7,7 +7,7 @@ namespace PetManager.Models.Quereies
     public class LoginQuery : AbstractQuery<string>
     {
         private readonly CoreDbContext db;
-        private User user;
+        private User? user;
         private UserCredentailsDTO userCredential;
         private string _token;
         private readonly IJwtAuth jwtAuth;

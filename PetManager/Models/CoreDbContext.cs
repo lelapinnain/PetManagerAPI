@@ -17,11 +17,14 @@ namespace PetManager.Models
         }
 
         public virtual DbSet<BreedInfo> BreedInfos { get; set; } = null!;
+        public virtual DbSet<DappvView> DappvViews { get; set; } = null!;
         public virtual DbSet<DewormingHistory> DewormingHistories { get; set; } = null!;
         public virtual DbSet<DewormingInfo> DewormingInfos { get; set; } = null!;
         public virtual DbSet<DewormingView> DewormingViews { get; set; } = null!;
+        public virtual DbSet<IntratracView> IntratracViews { get; set; } = null!;
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
+        public virtual DbSet<RabiesView> RabiesViews { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VaccinationView> VaccinationViews { get; set; } = null!;
         public virtual DbSet<VaccineHistory> VaccineHistories { get; set; } = null!;
@@ -44,6 +47,11 @@ namespace PetManager.Models
                     .HasName("PK__Table__D1E9AE9DB59864B2");
             });
 
+            modelBuilder.Entity<DappvView>(entity =>
+            {
+                entity.ToView("DappvView");
+            });
+
             modelBuilder.Entity<DewormingHistory>(entity =>
             {
                 entity.HasOne(d => d.Deworming)
@@ -64,6 +72,11 @@ namespace PetManager.Models
                 entity.ToView("DewormingView");
             });
 
+            modelBuilder.Entity<IntratracView>(entity =>
+            {
+                entity.ToView("IntratracView");
+            });
+
             modelBuilder.Entity<PetInfo>(entity =>
             {
                 entity.HasKey(e => e.PetId)
@@ -76,6 +89,13 @@ namespace PetManager.Models
                     .HasForeignKey(d => d.BreedId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PetInfo_BreedInfo");
+            });
+
+            modelBuilder.Entity<RabiesView>(entity =>
+            {
+                entity.ToView("RabiesView");
+
+                entity.Property(e => e.PetId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<VaccinationView>(entity =>

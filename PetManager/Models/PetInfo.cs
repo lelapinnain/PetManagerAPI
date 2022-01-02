@@ -37,6 +37,9 @@ namespace PetManager.Models
         public bool IsSold { get; set; }
         public int? PetTypeId { get; set; }
         public int? BreederId { get; set; }
+        public bool VaccinePostponed { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? VaccinePostponeDate { get; set; }
 
         [ForeignKey(nameof(BreedId))]
         [InverseProperty(nameof(BreedInfo.PetInfos))]
