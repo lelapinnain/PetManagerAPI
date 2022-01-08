@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetManager.DTOs.InputDTOs;
 using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
@@ -7,6 +8,7 @@ namespace PetManager.Controllers.PostControllers
 {
     public class PostponeVaccineController : AbstractControllerPost<GetPetInfoInputDTO>
     {
+        [Authorize]
         [Route("PetManager/PostponeVaccine")]
         public override IActionResult Post([FromBody] GetPetInfoInputDTO input)
         {

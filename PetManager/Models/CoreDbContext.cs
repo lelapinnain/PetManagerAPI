@@ -16,15 +16,21 @@ namespace PetManager.Models
         {
         }
 
+        public virtual DbSet<AppointmentHistory> AppointmentHistories { get; set; } = null!;
+        public virtual DbSet<AppointmentPet> AppointmentPets { get; set; } = null!;
         public virtual DbSet<BreedInfo> BreedInfos { get; set; } = null!;
+        public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<DappvView> DappvViews { get; set; } = null!;
         public virtual DbSet<DewormingHistory> DewormingHistories { get; set; } = null!;
         public virtual DbSet<DewormingInfo> DewormingInfos { get; set; } = null!;
         public virtual DbSet<DewormingView> DewormingViews { get; set; } = null!;
         public virtual DbSet<IntratracView> IntratracViews { get; set; } = null!;
+        public virtual DbSet<Invoice> Invoices { get; set; } = null!;
+        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<RabiesView> RabiesViews { get; set; } = null!;
+        public virtual DbSet<Transaction> Transactions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VaccinationView> VaccinationViews { get; set; } = null!;
         public virtual DbSet<VaccineHistory> VaccineHistories { get; set; } = null!;
@@ -41,6 +47,29 @@ namespace PetManager.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AppointmentHistory>(entity =>
+            {
+                entity.HasOne(d => d.PaymentMethod)
+                    .WithMany(p => p.AppointmentHistories)
+                    .HasForeignKey(d => d.PaymentMethodId)
+                    .HasConstraintName("FK_AppointmentHistory_PaymentMethod");
+            });
+
+            modelBuilder.Entity<AppointmentPet>(entity =>
+            {
+                entity.HasOne(d => d.AppointmentHistory)
+                    .WithMany(p => p.AppointmentPets)
+                    .HasForeignKey(d => d.AppointmentHistoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AppointmentPets_AppointmentHistory");
+
+                entity.HasOne(d => d.Pet)
+                    .WithMany(p => p.AppointmentPets)
+                    .HasForeignKey(d => d.PetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AppointmentPets_PetInfo");
+            });
+
             modelBuilder.Entity<BreedInfo>(entity =>
             {
                 entity.HasKey(e => e.BreedId)
@@ -77,6 +106,21 @@ namespace PetManager.Models
                 entity.ToView("IntratracView");
             });
 
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Invoices)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Invoices_Customers");
+
+                entity.HasOne(d => d.Petinfo)
+                    .WithMany(p => p.Invoices)
+                    .HasForeignKey(d => d.PetinfoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Invoices_PetInfo");
+            });
+
             modelBuilder.Entity<PetInfo>(entity =>
             {
                 entity.HasKey(e => e.PetId)
@@ -96,6 +140,19 @@ namespace PetManager.Models
                 entity.ToView("RabiesView");
 
                 entity.Property(e => e.PetId).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("FK_Transactions_Invoices");
+
+                entity.HasOne(d => d.PaymentMethod)
+                    .WithMany(p => p.Transactions)
+                    .HasForeignKey(d => d.PaymentMethodId)
+                    .HasConstraintName("FK_Transactions_PaymentMethod");
             });
 
             modelBuilder.Entity<VaccinationView>(entity =>

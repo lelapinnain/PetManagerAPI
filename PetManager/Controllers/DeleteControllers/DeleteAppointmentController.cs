@@ -6,11 +6,11 @@ using PetManager.Models.NonQueries;
 
 namespace PetManager.Controllers.DeleteControllers
 {
-    public class DeleteDewormingController : AbstractControllerDelete<DeleteDewormingDTO>
+    public class DeleteAppointmentController : AbstractControllerDelete<AppointmentInputDTO>
     {
         [Authorize]
-        [Route("PetManager/DeleteDeworming")]
-        public override IActionResult Delete([FromBody] DeleteDewormingDTO input)
+        [Route("PetManager/DeleteAppointment")]
+        public override IActionResult Delete([FromBody] AppointmentInputDTO input)
         {
             try
             {
@@ -20,17 +20,16 @@ namespace PetManager.Controllers.DeleteControllers
                     throw new ArgumentException();
                 }
 
-                DeleteDewormingByIDQuery deleteDewormingByIDQuery = new DeleteDewormingByIDQuery(input.DewormingHistoryId);
-                deleteDewormingByIDQuery.RunQuery();
+                DeleteAppointmentByIDQuery deleteAppointmentByIDQuery = new DeleteAppointmentByIDQuery(input.ApptId);
+                deleteAppointmentByIDQuery.RunQuery();
 
-                if (deleteDewormingByIDQuery.GetResult() != null)
+                if (deleteAppointmentByIDQuery.GetResult() == "ok")
                 {
-                    return Ok(deleteDewormingByIDQuery.GetResult());
+                    return Ok(deleteAppointmentByIDQuery.GetResult());
                 }
                 else
                 {
-                    return BadRequest(new GetRequestError("Vaccination Not Found").GetResponse());
-
+                    return BadRequest(new GetRequestError("Appointment Not Found").GetResponse());
                 }
             }
             catch (InvalidOperationException ex)
@@ -44,7 +43,6 @@ namespace PetManager.Controllers.DeleteControllers
             {
                 return BadRequest(new GetRequestError(ModelState.Values.Where(w => w.Errors.Count > 0).First().Errors.First().ErrorMessage).GetResponse());
             }
-
         }
     }
 }

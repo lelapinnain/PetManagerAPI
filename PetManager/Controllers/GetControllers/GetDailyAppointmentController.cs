@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PetManager.DailyVaccines;
 using PetManager.DTOs.InputDTOs;
+using PetManager.DTOs.Mappers;
 using PetManager.ErrorHandlers;
+using PetManager.Models;
 using PetManager.Models.Quereies;
 
 namespace PetManager.Controllers.GetControllers
 {
-    public class GetDailyVaccinations : AbstractControllerGet<GetDailyVaccinationsInputDTO>
+    public class GetDailyAppointmentController : AbstractControllerGet<AppointmentInputDTO>
     {
-        [Authorize]
-        [Route("PetManager/GetDailyVaccinations")]
-        public override IActionResult Get([FromHeader] GetDailyVaccinationsInputDTO input)
+
+       [Authorize]
+        [Route("PetManager/GetAppointmentByDate")]
+        public override IActionResult Get([FromQuery] AppointmentInputDTO input)
         {
             try
             {
@@ -20,34 +22,20 @@ namespace PetManager.Controllers.GetControllers
                 {
                     throw new ArgumentException();
                 }
+                GetAppointmentByDateQuery getAppointmentByDateQuery = new GetAppointmentByDateQuery(Convert.ToDateTime( input.AppointmentDate));
+                getAppointmentByDateQuery.RunQuery();
 
-                IDailyVaccines dailyVaccines = null;
+                GetAppointmentMapper getAppointmentMapper = new GetAppointmentMapper(getAppointmentByDateQuery.GetResult());
+                List<AppointmentRecord> appointments = getAppointmentMapper.GetMappedDTO();
 
-                if (input.VaccineType == 1)
+                if (appointments.Count != 0)
                 {
-                    dailyVaccines = new INTRATRACDailyVaccines();
-                }
-
-                if (input.VaccineType == 2)
-                {
-                    dailyVaccines = new DAPPVDailyVaccines();
-                }
-
-                if (input.VaccineType == 3)
-                {
-                    dailyVaccines = new RABIESDailyVaccines();
-                }
-
-                if (dailyVaccines != null)
-                {
-                    return Ok(dailyVaccines.GetDailyVaccines());
+                    return Ok(appointments);
                 }
                 else
                 {
                     return BadRequest(new GetRequestError("No Data Found").GetResponse());
-
                 }
-
             }
             catch (InvalidOperationException ex)
             {

@@ -11,7 +11,9 @@ namespace PetManager.Models
     {
         public PetInfo()
         {
+            AppointmentPets = new HashSet<AppointmentPet>();
             DewormingHistories = new HashSet<DewormingHistory>();
+            Invoices = new HashSet<Invoice>();
             VaccineHistories = new HashSet<VaccineHistory>();
         }
 
@@ -44,8 +46,12 @@ namespace PetManager.Models
         [ForeignKey(nameof(BreedId))]
         [InverseProperty(nameof(BreedInfo.PetInfos))]
         public virtual BreedInfo Breed { get; set; } = null!;
+        [InverseProperty(nameof(AppointmentPet.Pet))]
+        public virtual ICollection<AppointmentPet> AppointmentPets { get; set; }
         [InverseProperty(nameof(DewormingHistory.PetInfo))]
         public virtual ICollection<DewormingHistory> DewormingHistories { get; set; }
+        [InverseProperty(nameof(Invoice.Petinfo))]
+        public virtual ICollection<Invoice> Invoices { get; set; }
         [InverseProperty(nameof(VaccineHistory.PetInfo))]
         public virtual ICollection<VaccineHistory> VaccineHistories { get; set; }
     }
