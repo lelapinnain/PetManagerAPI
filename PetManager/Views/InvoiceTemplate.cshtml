@@ -1,3 +1,291 @@
 ﻿@model PetManager.Models.InvoiveTemplateModel
 
-Customer Name : @Model.Customer.FirstName @Model.Customer.LastName
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div class="container" style="font-size: 13px;">
+    <div class="row">
+        <div class="col fw-bold text-decoration-underline">
+            Buyer
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <strong>Customer Name :</strong> @Model.Customer.FirstName @Model.Customer.LastName
+        </div>
+        <div class="col">
+            <strong>Phone :</strong> @Model.Customer.Phone
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <strong>Address :</strong> @Model.Customer.Address
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col fw-bold text-decoration-underline">
+            Seller
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col fw-bold text-decoration-underline">
+            Puppy Information
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            Puppy Town
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <strong>Breed :</strong> @Model.PetInfo.Breed
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            6870 W. Spring Mountain Rd. #9
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <strong>D.O.B. :</strong> @Model.PetInfo.Dob.ToShortDateString()
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            Las Vegas, Nevada 89146
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <strong>Microship # :</strong> @Model.PetInfo.Microchip
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            www.PuppyTownLasVegas.com
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <strong>Gender :</strong> @Model.PetInfo.Gender
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            (702) 971- 6270
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col">
+            <strong>Registration :</strong> No
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col fw-bold text-decoration-underline text-center">
+            Agreement Terms
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col">
+            <strong>Puppy Spayed or Neutered :</strong> No
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            “No,” the new owner must spay / neuter the puppy, recommended when they are 4-6 months of age.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col">
+            “Yes,” your puppy has been spayed/ neutered!
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col">
+            <strong>Rabies Vaccination :</strong> No
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            “No,” the new owner must take the puppy to a veterinarian to get the rabies vaccination at 3 months of age (Clark County).
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col">
+            “Yes,” your puppy received the first rabies vaccine. They will need a booster rabies vaccine in 1 year.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            Puppy has been health checked by All American Animal Hospital, all other veterinary costs will not be covered. Puppy is adopted, “AS IS.” All American Animal Hospital is located at 6795 W. Flamingo Rd, 89103. (702) 227-3755
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            If the puppy requires hospitalization within 7 days, Puppy Town will cover all costs only at All American Animal Hospital. All other veterinary costs will NOT be reimbursed and the new owner will be responsible. This guarantee excludes Hypoglycemia or injury of the puppy from fault of the new owner.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            Puppy’s health is guaranteed up to 1 year of age against serious genetic diseases such as liver shunt and heart murmur.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+            Remedies are either
+        </div>
+        <div class="col">
+            A) Refund of the purchase price with the return of the puppy.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col">
+            B) Replacement with another puppy of equal value, no refund.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            The new owner shall not take their new puppy outdoors until all 4 sets of vaccinations have been administered. DO NOT TAKE TO PUBLIC OUTDOORS: Petco/PetSmart, Dog Parks, Public Grass Areas, Neighborhood walking.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            No refunds or exchanges are allowed after the sale, regardless of the reason, e.g. Landlord, allergies, marital, puppy size, puppy’s personality, pet’s lineage, financial ability, pet training, etc.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            The new owner shall use the same diet for at least 2 weeks, Nutri Source Small/Med Breed Puppy.
+            <br />
+            Recommended: Canned food, High Calorie Nutritional Gel. When switching brands, puppy food should be transitioned slowly.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            Deposit $500.00 is Not Refundable, Nor transferable, Puppy is on reservation up to one week of sale date. $20 boarding will apply thereafter, or the puppy will be rehomed and deposit will be a loss for the buyer.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1">
+            ____
+        </div>
+        <div class="col">
+            All claims and disputes arising under or relating to this Agreement are to be settled by binding arbitration in the state of Nevada. An award of arbitration may be confirmed in a court of competent jurisdiction.
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <strong>Purchase Price :</strong> $ 1,000
+        </div>
+        <div class="col">
+            <strong>Amount Paid :</strong> $ 1,000
+        </div>
+        <div class="col">
+            <strong>Balance :</strong> $ 0
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row fw-bold">
+        <div class="col">
+            _________________________
+        </div>
+        <div class="col">
+            @DateTime.Today.ToShortDateString()
+        </div>
+        <div class="col">
+            _________________________
+        </div>
+        <div class="col">
+            @DateTime.Today.ToShortDateString()
+        </div>
+    </div>
+
+    <div class="row fw-bold">
+        <div class="col">
+            Buyer Signature
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+            Seller Signature
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
