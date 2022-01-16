@@ -8,7 +8,7 @@ using PetManager.Utilities;
 
 namespace PetManager.Controllers.GetControllers
 {
-    public class GetInvoicePDFController : ControllerBase
+    public class GetInvoicePDFController : AbstractControllerGet<GetInvoicePDFInputDTO>
     {
         private readonly IViewRenderService viewRenderService;
 
@@ -19,7 +19,7 @@ namespace PetManager.Controllers.GetControllers
 
         //[Authorize]
         [Route("PetManager/GetInvoicePDF")]
-        public async Task<IActionResult> Get()
+        public override IActionResult Get([FromBody] GetInvoicePDFInputDTO input)
         {
            // return Ok();
             try
@@ -31,13 +31,24 @@ namespace PetManager.Controllers.GetControllers
                 }
 
                 InvoiveTemplateModel viewModel = new InvoiveTemplateModel();
-                viewModel.Customer = new Customer();
-                viewModel.Customer.FirstName = "Mahmoud";
-                viewModel.Customer.LastName = "Salah";
 
-                string result = await viewRenderService.RenderToStringAsync("InvoiceTemplate", viewModel);
+                GetCustomerInfoByIDQuery getCustomerInfoByIDQuery = new GetCustomerInfoByIDQuery(input.CustomerId);
+                getCustomerInfoByIDQuery.RunQuery();
+                viewModel.Customer = getCustomerInfoByIDQuery.GetResult();
+
+                GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(input.PetId);
+                getPetInfoByIDQuery.RunQuery();
+                viewModel.PetInfo = getPetInfoByIDQuery.GetResult();
+
+                string result = viewRenderService.RenderToStringAsync("InvoiceTemplate", viewModel);
 
                 IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
+
+                Renderer.PrintOptions.MarginBottom = 10;
+                Renderer.PrintOptions.MarginTop = 10;
+                Renderer.PrintOptions.MarginLeft = 10;
+                Renderer.PrintOptions.MarginRight = 10;
+
                 var pdfdoc = Renderer.RenderHtmlAsPdf(result);
 
                 string fileName = "TestPDF.pdf";

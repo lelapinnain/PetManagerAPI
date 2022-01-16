@@ -14,7 +14,7 @@ namespace PetManager.Utilities
 {
     public interface IViewRenderService
     {
-        Task<string> RenderToStringAsync(string viewName, object model);
+        string RenderToStringAsync(string viewName, object model);
     }
 
     public class ViewRenderService : IViewRenderService
@@ -32,7 +32,7 @@ namespace PetManager.Utilities
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<string> RenderToStringAsync(string viewName, object model)
+        public string RenderToStringAsync(string viewName, object model)
         {
             var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
@@ -55,7 +55,7 @@ namespace PetManager.Utilities
                     sw,
                     new HtmlHelperOptions()
                 );
-                await viewResult.View.RenderAsync(viewContext);
+                viewResult.View.RenderAsync(viewContext);
                 return sw.ToString();
             }
         }

@@ -23,6 +23,8 @@ namespace PetManager.Models
         public string? LastName { get; set; }
         public string? Address { get; set; }
         public string? Email { get; set; }
+        [StringLength(150)]
+        public string? Phone { get; set; }
 
         [InverseProperty(nameof(Invoice.Customer))]
         public virtual ICollection<Invoice> Invoices { get; set; }
