@@ -26,11 +26,11 @@ namespace PetManager.Models
         public virtual DbSet<DewormingView> DewormingViews { get; set; } = null!;
         public virtual DbSet<IntratracView> IntratracViews { get; set; } = null!;
         public virtual DbSet<Invoice> Invoices { get; set; } = null!;
+        public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
         public virtual DbSet<PetType> PetTypes { get; set; } = null!;
         public virtual DbSet<RabiesView> RabiesViews { get; set; } = null!;
-        public virtual DbSet<Transaction> Transactions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VaccinationView> VaccinationViews { get; set; } = null!;
         public virtual DbSet<VaccineHistory> VaccineHistories { get; set; } = null!;
@@ -121,6 +121,19 @@ namespace PetManager.Models
                     .HasConstraintName("FK_Invoices_PetInfo");
             });
 
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("FK_Transactions_Invoices");
+
+                entity.HasOne(d => d.PaymentMethod)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.PaymentMethodId)
+                    .HasConstraintName("FK_Transactions_PaymentMethod");
+            });
+
             modelBuilder.Entity<PetInfo>(entity =>
             {
                 entity.HasKey(e => e.PetId)
@@ -140,19 +153,6 @@ namespace PetManager.Models
                 entity.ToView("RabiesView");
 
                 entity.Property(e => e.PetId).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<Transaction>(entity =>
-            {
-                entity.HasOne(d => d.Invoice)
-                    .WithMany(p => p.Transactions)
-                    .HasForeignKey(d => d.InvoiceId)
-                    .HasConstraintName("FK_Transactions_Invoices");
-
-                entity.HasOne(d => d.PaymentMethod)
-                    .WithMany(p => p.Transactions)
-                    .HasForeignKey(d => d.PaymentMethodId)
-                    .HasConstraintName("FK_Transactions_PaymentMethod");
             });
 
             modelBuilder.Entity<VaccinationView>(entity =>

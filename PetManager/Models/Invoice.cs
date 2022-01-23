@@ -10,7 +10,7 @@ namespace PetManager.Models
     {
         public Invoice()
         {
-            Transactions = new HashSet<Transaction>();
+            Payments = new HashSet<Payment>();
         }
 
         [Key]
@@ -18,13 +18,25 @@ namespace PetManager.Models
         public int PetinfoId { get; set; }
         public int CustomerId { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Amount { get; set; }
+        public decimal ActualPrice { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal PriceAfterDiscount { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? RegistrationFees { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? Tax { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? PriceAfterTax { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? DepositAmount { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? RemainingBalance { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateOfPurchase { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime? PickupDate { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DepositDate { get; set; }
         [Column(TypeName = "datetime")]
@@ -36,7 +48,7 @@ namespace PetManager.Models
         [ForeignKey(nameof(PetinfoId))]
         [InverseProperty(nameof(PetInfo.Invoices))]
         public virtual PetInfo Petinfo { get; set; } = null!;
-        [InverseProperty(nameof(Transaction.Invoice))]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        [InverseProperty(nameof(Payment.Invoice))]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }
