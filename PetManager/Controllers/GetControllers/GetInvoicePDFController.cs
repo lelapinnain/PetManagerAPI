@@ -30,7 +30,7 @@ namespace PetManager.Controllers.GetControllers
                     throw new ArgumentException();
                 }
 
-                InvoiveTemplateModel viewModel = new InvoiveTemplateModel();
+                InvoiceTemplateModel viewModel = new InvoiceTemplateModel();
 
                 GetCustomerInfoByIDQuery getCustomerInfoByIDQuery = new GetCustomerInfoByIDQuery(input.CustomerId);
                 getCustomerInfoByIDQuery.RunQuery();

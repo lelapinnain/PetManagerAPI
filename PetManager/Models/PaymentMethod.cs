@@ -12,7 +12,7 @@ namespace PetManager.Models
         public PaymentMethod()
         {
             AppointmentHistories = new HashSet<AppointmentHistory>();
-            Transactions = new HashSet<Transaction>();
+            Payments = new HashSet<Payment>();
         }
 
         [Key]
@@ -22,7 +22,7 @@ namespace PetManager.Models
 
         [InverseProperty(nameof(AppointmentHistory.PaymentMethod))]
         public virtual ICollection<AppointmentHistory> AppointmentHistories { get; set; }
-        [InverseProperty(nameof(Transaction.PaymentMethod))]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        [InverseProperty(nameof(Payment.PaymentMethod))]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }
