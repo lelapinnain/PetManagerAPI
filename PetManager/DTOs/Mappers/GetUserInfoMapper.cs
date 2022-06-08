@@ -34,6 +34,7 @@ namespace PetManager.DTOs.Mappers
                     getPetInfoOutput.TransportationPrice = petInfo.TransportationPrice;
                     getPetInfoOutput.Gender = petInfo.Gender;
                     getPetInfoOutput.Color = petInfo.Color;
+                    getPetInfoOutput.Breed = petInfo.Breed;
 
                     getPetInfoOutputList.Add(getPetInfoOutput);
                 }

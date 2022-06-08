@@ -6,11 +6,14 @@ namespace PetManager.Models.NonQueries
     {
         private readonly CoreDbContext db;
         private AddPetInfoInputDTO addPetInfoInputDto;
+        private readonly string _url;
         private String response;
 
-       public PetInfoInsertQuery(AddPetInfoInputDTO _addPetInfoInputDto) {
+
+       public PetInfoInsertQuery(AddPetInfoInputDTO _addPetInfoInputDto , string url) {
 
             addPetInfoInputDto = _addPetInfoInputDto;
+            _url = url;
             db = new CoreDbContext();
 
         }
@@ -24,12 +27,14 @@ namespace PetManager.Models.NonQueries
                     Color = addPetInfoInputDto.Color,
                     Dob = addPetInfoInputDto.Dob,
                     Gender = addPetInfoInputDto.Gender,
-                    Images = addPetInfoInputDto.Images,
+                    Images = _url,
                     BuyPrice = addPetInfoInputDto.BuyPrice,
                     Microchip = addPetInfoInputDto.Microchip,
+                    Breed = addPetInfoInputDto.Breed,
                 };
                 db.Add(petInfo);
                 db.SaveChanges();
+
                 response = "ok";
             }
             catch (Exception ex )

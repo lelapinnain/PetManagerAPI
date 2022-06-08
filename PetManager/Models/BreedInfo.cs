@@ -23,7 +23,7 @@ namespace PetManager.Models
         [Unicode(false)]
         public string? BreedSize { get; set; }
 
-        [InverseProperty(nameof(PetInfo.Breed))]
+        [InverseProperty(nameof(PetInfo.BreedNavigation))]
         public virtual ICollection<PetInfo> PetInfos { get; set; }
     }
 }

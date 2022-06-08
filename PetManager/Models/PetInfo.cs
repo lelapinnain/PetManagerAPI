@@ -42,10 +42,12 @@ namespace PetManager.Models
         public bool VaccinePostponed { get; set; }
         [Column(TypeName = "date")]
         public DateTime? VaccinePostponeDate { get; set; }
+        [StringLength(50)]
+        public string? Breed { get; set; }
 
         [ForeignKey(nameof(BreedId))]
         [InverseProperty(nameof(BreedInfo.PetInfos))]
-        public virtual BreedInfo Breed { get; set; } = null!;
+        public virtual BreedInfo BreedNavigation { get; set; } = null!;
         [InverseProperty(nameof(AppointmentPet.Pet))]
         public virtual ICollection<AppointmentPet> AppointmentPets { get; set; }
         [InverseProperty(nameof(DewormingHistory.PetInfo))]

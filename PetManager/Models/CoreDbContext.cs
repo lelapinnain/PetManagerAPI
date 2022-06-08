@@ -26,6 +26,8 @@ namespace PetManager.Models
         public virtual DbSet<DewormingView> DewormingViews { get; set; } = null!;
         public virtual DbSet<IntratracView> IntratracViews { get; set; } = null!;
         public virtual DbSet<Invoice> Invoices { get; set; } = null!;
+        public virtual DbSet<InvoiceDetailsView> InvoiceDetailsViews { get; set; } = null!;
+        public virtual DbSet<InvoicesListView> InvoicesListViews { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public virtual DbSet<PetInfo> PetInfos { get; set; } = null!;
@@ -41,7 +43,7 @@ namespace PetManager.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=shared-sql-db.database.windows.net;Database=PetStoreManager;User ID=shareddb;Password=Sql@2022;");
+                optionsBuilder.UseSqlServer("Server=.;Database=PetStoreManager;Trusted_Connection=true;");
             }
         }
 
@@ -121,6 +123,16 @@ namespace PetManager.Models
                     .HasConstraintName("FK_Invoices_PetInfo");
             });
 
+            modelBuilder.Entity<InvoiceDetailsView>(entity =>
+            {
+                entity.ToView("InvoiceDetailsView");
+            });
+
+            modelBuilder.Entity<InvoicesListView>(entity =>
+            {
+                entity.ToView("InvoicesListView");
+            });
+
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasOne(d => d.Invoice)
@@ -137,11 +149,11 @@ namespace PetManager.Models
             modelBuilder.Entity<PetInfo>(entity =>
             {
                 entity.HasKey(e => e.PetId)
-                    .HasName("PK__PetInfo__48E53862F69AE395");
+                    .HasName("PK__PetInfo__48E5386249604593");
 
                 entity.Property(e => e.BreedId).HasDefaultValueSql("((1))");
 
-                entity.HasOne(d => d.Breed)
+                entity.HasOne(d => d.BreedNavigation)
                     .WithMany(p => p.PetInfos)
                     .HasForeignKey(d => d.BreedId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

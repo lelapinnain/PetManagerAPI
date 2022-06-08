@@ -1,20 +1,35 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CloudinaryDotNet;
+using Infrastructure.Photos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using PetManager.DTOs.InputDTOs;
 using PetManager.ErrorHandlers;
 using PetManager.Models.NonQueries;
 using PetManager.Models.Quereies;
+using PetManager.Utilities.Photo;
 using System.Text;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace PetManager.Controllers.PostControllers
 {
-    public class AddPetInfoController : AbstractControllerPost<AddPetInfoInputDTO>
+    public class AddPetInfoController : AbstractPhotoController<AddPetInfoInputDTO>
     {
+        private readonly Cloudinary _Cloudinary;
+        public AddPetInfoController(IOptions<CloudinarySettings> opt)
+        {
+            var account = new Account(
+             opt.Value.CloudName,
+             opt.Value.ApiKey,
+             opt.Value.ApiSecret
+         );
+            _Cloudinary = new Cloudinary(account);
+        }
+
         [Authorize]
         [Route("PetManager/AddPetInfo")]
-        public override IActionResult Post([FromBody] AddPetInfoInputDTO input)
+        public override async Task<IActionResult> Post([FromForm] AddPetInfoInputDTO input)
         //  public override IActionResult Post()
         {
             try
@@ -30,13 +45,17 @@ namespace PetManager.Controllers.PostControllers
                 //var txtStream = new MemoryStream(b);
                 // check the input DTO validation
                 #endregion
-
+                AddPhoto p = new AddPhoto(_Cloudinary);
+              //  var res = "";
+                    var res = await p.FileUpload(input.File);
+              if(res != null)
+               
 
                 if (!ModelState.IsValid)
                 {
                     throw new ArgumentException();
                 }
-                PetInfoInsertQuery petInfoInsert = new PetInfoInsertQuery(input);
+                PetInfoInsertQuery petInfoInsert = new PetInfoInsertQuery(input , res.URL);
                 petInfoInsert.RunQuery();
 
                 if (petInfoInsert.GetResult() == "ok")

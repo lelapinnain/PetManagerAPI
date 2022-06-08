@@ -29,7 +29,7 @@ namespace PetManager.Controllers.PostControllers
                 }
                 else
                 {
-                    return BadRequest("Pet Not Inserted");
+                    return BadRequest("User Already Exists");
                 }
             }
             catch (InvalidOperationException ex)

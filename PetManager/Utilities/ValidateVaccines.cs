@@ -9,8 +9,8 @@ namespace PetManager.Utilities
     {
         private enum vaccinationType
         {
-            DAPPV = 1,
-            INTRATRAC3,
+            INTRATRAC3  = 1,
+            DAPPV,
             RABIES
         }
 

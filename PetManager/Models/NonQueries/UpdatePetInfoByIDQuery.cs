@@ -35,7 +35,7 @@ namespace PetManager.Models.NonQueries
                     petInfo.Gender = updatePetInfoDTO.Gender;
                     petInfo.Microchip = updatePetInfoDTO.Microchip;
                     petInfo.TransportationPrice = updatePetInfoDTO.TransportationPrice;
-
+                    petInfo.Breed = updatePetInfoDTO.Breed;
                     db.Update(petInfo);
                     db.SaveChanges();
 

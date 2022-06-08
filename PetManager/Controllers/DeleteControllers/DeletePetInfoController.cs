@@ -9,7 +9,7 @@ namespace PetManager.Controllers.DeleteControllers
 {
     public class DeletePetInfoController:AbstractControllerDelete<GetPetInfoInputDTO>
     {
-        [Authorize]
+        //[Authorize]
         [Route("PetManager/DeletePetInfo")]
         public override IActionResult Delete([FromBody] GetPetInfoInputDTO input)
        // public override IActionResult Delete([FromBody] int PetId)

@@ -14,5 +14,11 @@ namespace PetManager.Models
         public DateTime Dob { get; set; }
         public string Microchip { get; set; } = null!;
         public int PetId { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? LastDose { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime Expr1 { get; set; }
+        public int? Expr2 { get; set; }
+        public int? DoseCount { get; set; }
     }
 }

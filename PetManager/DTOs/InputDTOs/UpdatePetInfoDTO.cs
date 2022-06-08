@@ -22,5 +22,6 @@ namespace PetManager.DTOs.InputDTOs
         public string Color { get; set; } = null!;
 
         public string Gender { get; set; } = null!;
+        public string Breed { get; set; } = null;
     }
 }

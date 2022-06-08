@@ -35,6 +35,7 @@ namespace PetManager.DTOs.Mappers
                 getPetInfoOutput.Color = petInfo.Color; 
                 getPetInfoOutput.Vaccinations = vaccinations;
                 getPetInfoOutput.Deworming = deworming;
+                getPetInfoOutput.Breed = petInfo.Breed;
             }
 
             return getPetInfoOutput;
