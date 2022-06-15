@@ -1,25 +1,30 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PetManager.DTOs.InputDTOs;
 using PetManager.ErrorHandlers;
 using PetManager.Models.Quereies;
+using PetManager.Utilities;
+using PetManager.Utilities.Paging;
 
 namespace PetManager.Controllers.GetControllers
 {
-    public class GetInvoicesAllController : AbstractControllerGetNoType
+    public class GetInvoicesAllController : AbstractControllerGet<PagingParams>
     {
         [Authorize]
         [Route("PetManager/GetInvoicesAll")]
-        public override IActionResult Get()
+        public async override Task<IActionResult> Get([FromQuery] PagingParams pagingParams)
         {
-            GetInvoicesAllQuery getInvoicesAllQuery = new GetInvoicesAllQuery();
-            getInvoicesAllQuery.RunQuery();
+            GetInvoicesAllQuery getInvoicesAllQuery = new GetInvoicesAllQuery(pagingParams);
+            await getInvoicesAllQuery.RunQuery();
 
             //GetAllPetInfoMapper getAllPetInfoMapper = new GetAllPetInfoMapper(getAllPetInfoQuery.GetResult());
             //List<GetPetInfoOutputDTO> getPetInfoOutputDTOList = getAllPetInfoMapper.GetMappedDTO();
 
             if (getInvoicesAllQuery != null)
             {
-                return Ok(getInvoicesAllQuery.GetResult());
+                var result = getInvoicesAllQuery.GetResult();
+                Response.AddPaginationHeader(result.CurrentPage, result.PageSize, result.TotalCount, result.TotalPages);
+                return Ok(result);
             }
             else
             {

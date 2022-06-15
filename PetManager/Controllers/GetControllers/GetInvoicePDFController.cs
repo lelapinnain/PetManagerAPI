@@ -19,7 +19,7 @@ namespace PetManager.Controllers.GetControllers
 
         //[Authorize]
         [Route("PetManager/GetInvoicePDF")]
-        public override IActionResult Get([FromBody] GetInvoicePDFInputDTO input)
+        public override async Task<IActionResult> Get([FromBody] GetInvoicePDFInputDTO input)
         {
            // return Ok();
             try
@@ -37,7 +37,7 @@ namespace PetManager.Controllers.GetControllers
                 viewModel.Customer = getCustomerInfoByIDQuery.GetResult();
 
                 GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(input.PetId);
-                getPetInfoByIDQuery.RunQuery();
+                await getPetInfoByIDQuery.RunQuery();
                 viewModel.PetInfo = getPetInfoByIDQuery.GetResult();
 
                 string result = viewRenderService.RenderToStringAsync("InvoiceTemplate", viewModel);

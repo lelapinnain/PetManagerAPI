@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PetManager.Authentication;
 using PetManager.DTOs.InputDTOs;
 
@@ -21,9 +22,9 @@ namespace PetManager.Models.Quereies
         }
 
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            user = db.Users.Where(user => user.Email == userCredential.Email).SingleOrDefault();
+            user = await db.Users.Where(user => user.Email == userCredential.Email).SingleOrDefaultAsync();
             if (user != null)
             {
                // var hashedPassword = new PasswordHasher<object?>().HashPassword(null, userCredential.Password);
@@ -37,16 +38,19 @@ namespace PetManager.Models.Quereies
                     var token = jwtAuth.Authentication(user.Email, user.Password);
                  
                    if(token != null) _token = token;
+                   
                 }
 
+
             }
+            return ("");
 
 
 
 
         }
 
-        public override string GetResult()
+        public  override string GetResult()
         {
             return _token;
         }

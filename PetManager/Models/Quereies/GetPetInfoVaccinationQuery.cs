@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetPetInfoVaccinationQuery:AbstractQuery<List<VaccinationView>>
     {
@@ -13,9 +15,10 @@
             db = new CoreDbContext();
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            vaccineslist = db.VaccinationViews.Where(w=> w.PetInfoId == petId).ToList();
+            vaccineslist = await db.VaccinationViews.Where(w=> w.PetInfoId == petId).ToListAsync();
+            return ("");
             
         }
 

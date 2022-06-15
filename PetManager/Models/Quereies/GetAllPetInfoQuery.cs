@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetAllPetInfoQuery : AbstractQuery<List<PetInfo>>
     {
@@ -12,9 +14,10 @@
             petInfoList = null;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            petInfoList = db.PetInfos.ToList();
+            petInfoList = await db.PetInfos.ToListAsync();
+            return ("");
         }
 
         public override List<PetInfo> GetResult()

@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PetManager.Authentication;
 using PetManager.DTOs.InputDTOs;
 
@@ -19,9 +20,9 @@ namespace PetManager.Models.NonQueries
             db = new CoreDbContext();
             
         }
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            var user = db.Users.Where(u=> u.Email == userCredential.Email).FirstOrDefault();
+            var user = await db.Users.Where(u=> u.Email == userCredential.Email).FirstOrDefaultAsync();
             if(user == null)
             {
                 try
@@ -36,7 +37,7 @@ namespace PetManager.Models.NonQueries
 
                     };
                     db.Add(NewUser);
-                    db.SaveChanges();
+                   await db.SaveChangesAsync();
                     response = "ok";
                 }
                 catch (Exception ex)
@@ -51,6 +52,7 @@ namespace PetManager.Models.NonQueries
             {
                 response = "User Already Exists";
             }
+            return response;
             
            
         }

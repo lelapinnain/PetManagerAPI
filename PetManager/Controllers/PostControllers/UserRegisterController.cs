@@ -8,7 +8,7 @@ namespace PetManager.Controllers.PostControllers
     public class UserRegisterController : AbstractControllerPost<UserCredentailsDTO>
     {
         [Route("PetManager/Register")]
-        public override IActionResult Post([FromBody] UserCredentailsDTO input)
+        public override async Task<IActionResult> Post([FromBody] UserCredentailsDTO input)
         {
             try
             {
@@ -18,7 +18,7 @@ namespace PetManager.Controllers.PostControllers
                     throw new ArgumentException();
                 }
                 RegisterUserQuery registerUser = new RegisterUserQuery(input);
-                registerUser.RunQuery();
+                await registerUser.RunQuery();
 
 
 

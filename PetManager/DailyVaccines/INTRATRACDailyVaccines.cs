@@ -5,10 +5,10 @@ namespace PetManager.DailyVaccines
 {
     public class INTRATRACDailyVaccines : IDailyVaccines
     {
-        public List<DailyVaccineRecord> GetDailyVaccines()
+        public async Task<List<DailyVaccineRecord>> GetDailyVaccines()
         {
             GetDailyIntratracQuery getDailyIntratracQuery = new GetDailyIntratracQuery();
-            getDailyIntratracQuery.RunQuery();
+            await getDailyIntratracQuery.RunQuery();
 
             return getDailyIntratracQuery.GetResult();
         }

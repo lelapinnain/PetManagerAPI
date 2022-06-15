@@ -11,7 +11,7 @@ namespace PetManager.Controllers.DeleteControllers
     {
         //[Authorize]
         [Route("PetManager/DeletePetInfo")]
-        public override IActionResult Delete([FromBody] GetPetInfoInputDTO input)
+        public override async Task< IActionResult> Delete([FromBody] GetPetInfoInputDTO input)
        // public override IActionResult Delete([FromBody] int PetId)
         {
             try
@@ -23,7 +23,7 @@ namespace PetManager.Controllers.DeleteControllers
                 }
 
                 DeletePetInfoByIDQuery DeletePetInfoByIDQuery = new DeletePetInfoByIDQuery( input.PetId);
-                DeletePetInfoByIDQuery.RunQuery();
+               await DeletePetInfoByIDQuery.RunQuery();
 
                 if (DeletePetInfoByIDQuery != null)
                 {

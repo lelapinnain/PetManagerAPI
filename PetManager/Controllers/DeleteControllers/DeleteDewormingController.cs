@@ -10,7 +10,7 @@ namespace PetManager.Controllers.DeleteControllers
     {
         [Authorize]
         [Route("PetManager/DeleteDeworming")]
-        public override IActionResult Delete([FromBody] DeleteDewormingDTO input)
+        public override async Task< IActionResult> Delete([FromBody] DeleteDewormingDTO input)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace PetManager.Controllers.DeleteControllers
                 }
 
                 DeleteDewormingByIDQuery deleteDewormingByIDQuery = new DeleteDewormingByIDQuery(input.DewormingHistoryId);
-                deleteDewormingByIDQuery.RunQuery();
+                await deleteDewormingByIDQuery.RunQuery();
 
                 if (deleteDewormingByIDQuery.GetResult() != null)
                 {

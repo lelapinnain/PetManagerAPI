@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.NonQueries
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.NonQueries
 {
     public class DeleteDewormingByIDQuery : AbstractNonQuery<string>
     {
@@ -21,27 +23,29 @@
             return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             try
             {
-                DewormingHistory? deworming = db.DewormingHistories.Where(v => v.DewormingHistoryId == dewormingId).SingleOrDefault();
+                DewormingHistory? deworming =await db.DewormingHistories.Where(v => v.DewormingHistoryId == dewormingId).SingleOrDefaultAsync();
                 if (deworming != null)
                 {
                     db.Remove(deworming);
-                    db.SaveChanges();
+                   await db.SaveChangesAsync();
                     response = "ok";
                 }
                 else
                 {
                     response = "Deworming Record Not Found";
                 }
+                
             }
             catch (Exception ex)
             {
 
                 response = ex.Message;
             }
+            return response;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PetManager.Models.NonQueries
             return response;
         }
 
-        public override void RunQuery()
+        public  async override Task<string> RunQuery()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace PetManager.Models.NonQueries
 
                 };
                 db.Add(dewormingHistory);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 response = "ok";
             }
             catch (Exception ex)
@@ -41,6 +41,7 @@ namespace PetManager.Models.NonQueries
 
                 response = ex.Message;
             }
+            return (response);
         }
     }
 }

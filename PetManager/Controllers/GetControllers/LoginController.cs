@@ -25,7 +25,7 @@ namespace PetManager.Controllers.GetControllers
         }
 
         [Route("PetManager/Login")]
-        public override IActionResult Get([FromQuery] UserCredentailsDTO userCredential)
+        public override async Task< IActionResult> Get([FromQuery] UserCredentailsDTO userCredential)
         {
             try
             {
@@ -35,9 +35,9 @@ namespace PetManager.Controllers.GetControllers
                 }
 
                 LoginQuery loginQuery = new LoginQuery(userCredential, jwtAuth);
-                loginQuery.RunQuery();
+                 await loginQuery.RunQuery();
 
-                var token = loginQuery.GetResult();
+                var token =  loginQuery.GetResult();
 
                 if (token != null)
                 {

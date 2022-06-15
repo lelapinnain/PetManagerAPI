@@ -28,13 +28,13 @@ namespace PetManager.Utilities
             response = new APIResponse();
         }
 
-        public APIResponse Execute()
+        public async Task< APIResponse> Execute()
         {
             GetVaccineHistoryByTypeAndPet getVaccineHistoryByTypeAndPet = new GetVaccineHistoryByTypeAndPet(petId, vaccinationId);
-            List<VaccineHistory> vaccineHistories = getVaccineHistoryByTypeAndPet.Execute();
+            List<VaccineHistory> vaccineHistories = await getVaccineHistoryByTypeAndPet.Execute();
 
             GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(petId);
-            getPetInfoByIDQuery.RunQuery();
+            await getPetInfoByIDQuery.RunQuery();
             PetInfo petInfo = getPetInfoByIDQuery.GetResult();
 
             IVaccineValidations vaccineValidations = null;

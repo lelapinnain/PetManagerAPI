@@ -10,7 +10,7 @@ namespace PetManager.Controllers.PutControllers
     [Route("PetManager/UpdateAppointment")]
     public class UpdateAppointmentController : AbstractControllerPut<AppointmentInputDTO>
     {
-        public override IActionResult Put([FromBody] AppointmentInputDTO input)
+        public override async Task< IActionResult> Put([FromBody] AppointmentInputDTO input)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace PetManager.Controllers.PutControllers
                     throw new ArgumentException();
                 }
                 UpdateAppointmentByIDQuery updateAppointmentByIDQuery = new UpdateAppointmentByIDQuery(input);
-                updateAppointmentByIDQuery.RunQuery();
+                await updateAppointmentByIDQuery.RunQuery();
 
               
 

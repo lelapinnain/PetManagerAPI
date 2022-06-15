@@ -20,20 +20,20 @@ namespace PetManager.Utilities
             invoiceId = _invoiceId;
         }
 
-        public PdfDocument Execute()
+        public async Task<PdfDocument> Execute()
         {
             InvoiceTemplateModel viewModel = new InvoiceTemplateModel();
 
             GetCustomerInfoByIDQuery getCustomerInfoByIDQuery = new GetCustomerInfoByIDQuery(customerId);
-            getCustomerInfoByIDQuery.RunQuery();
+            await getCustomerInfoByIDQuery.RunQuery();
             viewModel.Customer = getCustomerInfoByIDQuery.GetResult();
 
             GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(petId);
-            getPetInfoByIDQuery.RunQuery();
+            await getPetInfoByIDQuery.RunQuery();
             viewModel.PetInfo = getPetInfoByIDQuery.GetResult();
 
             GetInvoiceByIDQuery getInvoiceByIDQuery = new GetInvoiceByIDQuery(invoiceId);
-            getInvoiceByIDQuery.RunQuery();
+            await getInvoiceByIDQuery.RunQuery();
             viewModel.Invoice = getInvoiceByIDQuery.GetResult();
 
             string result = viewRenderService.RenderToStringAsync("InvoiceTemplate", viewModel);

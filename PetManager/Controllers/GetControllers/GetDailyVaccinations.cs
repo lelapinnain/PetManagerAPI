@@ -11,7 +11,7 @@ namespace PetManager.Controllers.GetControllers
     {
         [Authorize]
         [Route("PetManager/GetDailyVaccinations")]
-        public override IActionResult Get([FromHeader] GetDailyVaccinationsInputDTO input)
+        public override async Task< IActionResult> Get([FromHeader] GetDailyVaccinationsInputDTO input)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace PetManager.Controllers.GetControllers
 
                 if (dailyVaccines != null)
                 {
-                    return Ok(dailyVaccines.GetDailyVaccines());
+                    return Ok(await dailyVaccines.GetDailyVaccines());
                 }
                 else
                 {

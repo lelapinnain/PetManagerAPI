@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetDailyIntratracQuery : AbstractQuery<List<DailyVaccineRecord>>
     {
@@ -14,9 +16,9 @@
             dailyVaccinesList = new List<DailyVaccineRecord>();
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            IntratracList = db.IntratracViews.ToList();
+            IntratracList = await db.IntratracViews.ToListAsync();
 
             foreach (var intratracRecord in IntratracList)
             {
@@ -29,6 +31,7 @@
 
                 dailyVaccinesList.Add(dailyVaccineRecord);
             }
+            return ("");
         }
 
         public override List<DailyVaccineRecord> GetResult()

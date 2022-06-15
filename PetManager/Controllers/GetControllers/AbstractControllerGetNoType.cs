@@ -6,6 +6,6 @@ namespace PetManager.Controllers.GetControllers
     public abstract class AbstractControllerGetNoType : ControllerBase
     {
         [HttpGet]
-        public abstract IActionResult Get();
+        public abstract Task<IActionResult> Get();
     }
 }

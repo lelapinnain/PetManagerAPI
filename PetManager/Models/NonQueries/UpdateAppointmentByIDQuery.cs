@@ -1,4 +1,5 @@
-﻿using PetManager.DTOs.InputDTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PetManager.DTOs.InputDTOs;
 
 namespace PetManager.Models.NonQueries
 {
@@ -26,9 +27,9 @@ namespace PetManager.Models.NonQueries
             return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
-            appointmentHistory = db.AppointmentHistories.Where(a => a.AppointmentId == appointmentInputDTO.ApptId).SingleOrDefault();
+            appointmentHistory = await db.AppointmentHistories.Where(a => a.AppointmentId == appointmentInputDTO.ApptId).SingleOrDefaultAsync();
             if (appointmentHistory != null)
             {
                 appointmentHistory.CustomerName = appointmentInputDTO.CustomerName;
@@ -40,7 +41,7 @@ namespace PetManager.Models.NonQueries
                 
 
                 db.Update(appointmentHistory);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 response = "ok";
 
             }
@@ -48,6 +49,7 @@ namespace PetManager.Models.NonQueries
             {
                 response = "Appointment Not Found";
             }
+            return response;
         }
     }
 }

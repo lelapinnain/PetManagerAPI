@@ -10,7 +10,7 @@ namespace PetManager.Controllers.PutControllers
     {
         [Authorize]
         [Route("PetManager/UpdateDeworming")]
-        public override IActionResult Put([FromBody] AddDewormingInputDTO input)
+        public override async Task< IActionResult> Put([FromBody] AddDewormingInputDTO input)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace PetManager.Controllers.PutControllers
 
 
                 UpdateDewormingByIDQuery updateDewormingByIDQuery = new UpdateDewormingByIDQuery(input);
-                updateDewormingByIDQuery.RunQuery();
+                await updateDewormingByIDQuery.RunQuery();
 
                     if (updateDewormingByIDQuery.GetResult() != null)
                     {

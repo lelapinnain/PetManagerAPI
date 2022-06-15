@@ -1,4 +1,5 @@
-﻿using PetManager.DTOs.InputDTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PetManager.DTOs.InputDTOs;
 
 namespace PetManager.Models.Quereies
 {
@@ -16,14 +17,15 @@ namespace PetManager.Models.Quereies
 
             
         }
-        public override List<AppointmentHistory> GetResult()
+        public  override List<AppointmentHistory> GetResult()
         {
-            return appointmentHistoryList;
+            return  appointmentHistoryList;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            appointmentHistoryList = db.AppointmentHistories.Where(a=> a.AppointmentDate == date).ToList();
+            appointmentHistoryList = await db.AppointmentHistories.Where(a=> a.AppointmentDate == date).ToListAsync();
+            return ("");
         }
     }
 }

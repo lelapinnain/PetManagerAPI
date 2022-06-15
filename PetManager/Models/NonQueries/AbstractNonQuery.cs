@@ -2,7 +2,7 @@
 {
     public abstract class AbstractNonQuery<T>
     {
-        public abstract void RunQuery();
+        public abstract Task<string> RunQuery();
 
         public abstract T GetResult();
     }

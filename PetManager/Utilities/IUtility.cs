@@ -2,6 +2,6 @@
 {
     public interface IUtility<T>
     {
-        T Execute();
+        Task<T> Execute();
     }
 }

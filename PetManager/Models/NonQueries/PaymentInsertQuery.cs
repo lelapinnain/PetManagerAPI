@@ -24,7 +24,7 @@ namespace PetManager.Models.NonQueries
             return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             Payment payment = new Payment()
             {
@@ -35,8 +35,9 @@ namespace PetManager.Models.NonQueries
             };
 
             db.Add(payment);
-            db.SaveChanges();
+           await db.SaveChangesAsync();
             response = "ok";
+            return response;
         }
     }
 }

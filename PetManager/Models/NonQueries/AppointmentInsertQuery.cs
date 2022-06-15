@@ -18,7 +18,7 @@ namespace PetManager.Models.NonQueries
            return response;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
             if (addAppointmentInputDTO != null)
             {
@@ -36,9 +36,11 @@ namespace PetManager.Models.NonQueries
 
                 };
                 db.Add(appointmentHistory);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
                 response = "ok";
+               
             }
+            return ("");
          
         }
     }

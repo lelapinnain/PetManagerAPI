@@ -11,7 +11,7 @@ namespace PetManager.Controllers.PutControllers
     {
         [Authorize]
         [Route("PetManager/UpdateVaccination")]
-        public override IActionResult Put([FromBody] AddVaccinationInputDTO input)
+        public override async Task<IActionResult> Put([FromBody] AddVaccinationInputDTO input)
         {
              try
             {
@@ -22,12 +22,12 @@ namespace PetManager.Controllers.PutControllers
                 }
 
                 ValidateVaccines validateVaccines = new ValidateVaccines(input.VaccinationDate, input.PetId, input.VaccinationId);
-                APIResponse response = validateVaccines.Execute();
+                APIResponse response = await validateVaccines.Execute();
 
                 if (response.Code == APIResponse.ErrorCode.SUCCESS)
                 {
                     UpdateVaccinationByIDQuery updateVaccinationByIDQuery = new UpdateVaccinationByIDQuery(input);
-                    updateVaccinationByIDQuery.RunQuery();
+                   await  updateVaccinationByIDQuery.RunQuery();
 
                     if (updateVaccinationByIDQuery.GetResult() != null)
                     {

@@ -10,7 +10,7 @@ namespace PetManager.Controllers.DeleteControllers
     {
         [Authorize]
         [Route("PetManager/DeleteAppointment")]
-        public override IActionResult Delete([FromBody] AppointmentInputDTO input)
+        public override async Task<IActionResult> Delete([FromQuery] AppointmentInputDTO input)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace PetManager.Controllers.DeleteControllers
                 }
 
                 DeleteAppointmentByIDQuery deleteAppointmentByIDQuery = new DeleteAppointmentByIDQuery(input.ApptId);
-                deleteAppointmentByIDQuery.RunQuery();
+                await deleteAppointmentByIDQuery.RunQuery();
 
                 if (deleteAppointmentByIDQuery.GetResult() == "ok")
                 {

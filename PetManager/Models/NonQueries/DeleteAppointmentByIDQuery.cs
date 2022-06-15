@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.NonQueries
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.NonQueries
 {
     public class DeleteAppointmentByIDQuery : AbstractNonQuery<string>
     {
@@ -21,13 +23,13 @@
             return response;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            AppointmentHistory appointment = db.AppointmentHistories.Where(a => a.AppointmentId == apptId).SingleOrDefault();
+            AppointmentHistory appointment = await db.AppointmentHistories.Where(a => a.AppointmentId == apptId).SingleOrDefaultAsync();
             if (appointment != null)
             {
                 db.Remove(appointment);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
                 response = "ok";
 
             }
@@ -35,6 +37,7 @@
             {
                 response = "Appointment Not Found";
             }
+            return response;
         }
     }
 }

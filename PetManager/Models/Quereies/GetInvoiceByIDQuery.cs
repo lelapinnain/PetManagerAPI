@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetInvoiceByIDQuery : AbstractQuery<Invoice>
     {
@@ -15,9 +17,10 @@
             invoice = null;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            invoice = db.Invoices.Where(w => w.InvoiceId == invoiceId).FirstOrDefault();
+            invoice = await db.Invoices.Where(w => w.InvoiceId == invoiceId).FirstOrDefaultAsync();
+            return ("");
         }
 
         public override Invoice GetResult()

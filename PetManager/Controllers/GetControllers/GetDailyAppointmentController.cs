@@ -13,7 +13,7 @@ namespace PetManager.Controllers.GetControllers
 
        [Authorize]
         [Route("PetManager/GetAppointmentByDate")]
-        public override IActionResult Get([FromQuery] AppointmentInputDTO input)
+        public override async Task<IActionResult> Get([FromQuery] AppointmentInputDTO input)
         {
             try
             {
@@ -22,15 +22,15 @@ namespace PetManager.Controllers.GetControllers
                 {
                     throw new ArgumentException();
                 }
-                GetAppointmentByDateQuery getAppointmentByDateQuery = new GetAppointmentByDateQuery(Convert.ToDateTime( input.AppointmentDate));
-                getAppointmentByDateQuery.RunQuery();
+                GetAppointmentByDateQuery getAppointmentByDateQuery =  new GetAppointmentByDateQuery(Convert.ToDateTime( input.AppointmentDate));
+                await getAppointmentByDateQuery.RunQuery();
 
                 GetAppointmentMapper getAppointmentMapper = new GetAppointmentMapper(getAppointmentByDateQuery.GetResult());
                 List<AppointmentRecord> appointments = getAppointmentMapper.GetMappedDTO();
 
                 if (appointments.Count != 0)
                 {
-                    return Ok(appointments);
+                    return Ok(appointments );
                 }
                 else
                 {

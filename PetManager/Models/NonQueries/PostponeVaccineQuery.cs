@@ -19,7 +19,7 @@
            return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
            
                 petInfo = db.PetInfos.Where(pet => pet.PetId == petId).FirstOrDefault();
@@ -28,14 +28,14 @@
                     petInfo.VaccinePostponed = true;
                     petInfo.VaccinePostponeDate = DateTime.Now.AddDays(7);
                     db.Update(petInfo);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 response = "ok";
                 }
                 else
                 {
                     response = "Record not found";
                 }
-           
+           return response;
           
         }
     }

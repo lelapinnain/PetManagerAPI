@@ -6,6 +6,6 @@ namespace PetManager.Controllers.GetControllers
     public abstract class AbstractControllerGet<T> : ControllerBase
     {
         [HttpGet]
-        public abstract IActionResult Get([FromQuery] T input);
+        public abstract Task<IActionResult> Get([FromQuery] T input);
     }
 }

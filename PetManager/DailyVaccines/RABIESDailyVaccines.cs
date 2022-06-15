@@ -5,10 +5,10 @@ namespace PetManager.DailyVaccines
 {
     public class RABIESDailyVaccines : IDailyVaccines
     {
-        public List<DailyVaccineRecord> GetDailyVaccines()
+        public async Task< List<DailyVaccineRecord>> GetDailyVaccines()
         {
             GetDailyRabiesQuery getDailyRabiesQuery = new GetDailyRabiesQuery();
-            getDailyRabiesQuery.RunQuery();
+           await getDailyRabiesQuery.RunQuery();
 
             return getDailyRabiesQuery.GetResult();
         }

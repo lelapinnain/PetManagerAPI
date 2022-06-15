@@ -5,6 +5,6 @@ namespace PetManager.Controllers.PostControllers
     public abstract class AbstractControllerPost<T>:ControllerBase
     {
            [HttpPost]
-        public abstract IActionResult Post([FromBody] T input);
+        public abstract Task<IActionResult> Post([FromBody] T input);
     }
 }

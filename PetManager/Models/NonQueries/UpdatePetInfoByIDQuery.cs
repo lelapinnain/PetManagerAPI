@@ -1,4 +1,5 @@
-﻿using PetManager.DTOs.InputDTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PetManager.DTOs.InputDTOs;
 
 namespace PetManager.Models.NonQueries
 {
@@ -21,11 +22,11 @@ namespace PetManager.Models.NonQueries
 
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             try
             {
-                petInfo = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
+                petInfo =await db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefaultAsync();
                 if (petInfo != null)
                 {
                     petInfo.PetName = updatePetInfoDTO.PetName;
@@ -37,7 +38,7 @@ namespace PetManager.Models.NonQueries
                     petInfo.TransportationPrice = updatePetInfoDTO.TransportationPrice;
                     petInfo.Breed = updatePetInfoDTO.Breed;
                     db.Update(petInfo);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                 }
                 else
@@ -52,7 +53,7 @@ namespace PetManager.Models.NonQueries
             }
            
 
-
+            return response;
 
         }
 

@@ -12,7 +12,7 @@ namespace PetManager.Controllers.PostControllers
         [Route("PetManager/AddDeworming")]
 
 
-        public override IActionResult Post([FromBody] AddDewormingInputDTO input)
+        public async override Task< IActionResult> Post([FromBody] AddDewormingInputDTO input)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace PetManager.Controllers.PostControllers
                 // Validate Vaccine
 
                 DewormingInsertQuery dewormingInsertQuery = new DewormingInsertQuery(input);
-                dewormingInsertQuery.RunQuery();
+               await dewormingInsertQuery.RunQuery();
 
                 if (dewormingInsertQuery.GetResult() == "ok")
                 {

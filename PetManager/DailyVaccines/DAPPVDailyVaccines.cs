@@ -5,10 +5,10 @@ namespace PetManager.DailyVaccines
 {
     public class DAPPVDailyVaccines : IDailyVaccines
     {
-        public List<DailyVaccineRecord> GetDailyVaccines()
+        public async Task< List<DailyVaccineRecord>> GetDailyVaccines()
         {
             GetDailyDappvQuery getDailyDappvQuery = new GetDailyDappvQuery();
-            getDailyDappvQuery.RunQuery();
+            await getDailyDappvQuery.RunQuery();
 
             return getDailyDappvQuery.GetResult();
         }

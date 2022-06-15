@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.NonQueries
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.NonQueries
 {
     public class DeleteVaccineByIDQuery : AbstractNonQuery<string>
     {
@@ -16,15 +18,15 @@
 
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             try
             {
-                VaccineHistory? vaccine = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccineId).SingleOrDefault();
+                VaccineHistory? vaccine =await db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccineId).SingleOrDefaultAsync();
                 if (vaccine != null)
                 {
                     db.Remove(vaccine);
-                    db.SaveChanges();
+                   await db.SaveChangesAsync();
                     response = "ok";
                 }
                 else
@@ -37,7 +39,7 @@
 
                response=ex.Message;
             }
-           
+           return response;
 
 
 

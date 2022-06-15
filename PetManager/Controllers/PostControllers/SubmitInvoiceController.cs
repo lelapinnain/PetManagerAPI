@@ -20,7 +20,7 @@ namespace PetManager.Controllers.PostControllers
         }
 
 
-        public override IActionResult Post([FromBody] SubmitInvoiceDTO input)
+        public override async Task< IActionResult> Post([FromBody] SubmitInvoiceDTO input)
         {
             CoreDbContext db = new CoreDbContext();
             var dbContextTransaction = db.Database.BeginTransaction();
@@ -33,13 +33,13 @@ namespace PetManager.Controllers.PostControllers
                 }
 
                 CustomerInsertQuery customerInsertQuery = new CustomerInsertQuery(db, input.Customer);
-                customerInsertQuery.RunQuery();
+               await customerInsertQuery.RunQuery();
 
                 InvoiceInsertQuery invoiceInsertQuery = new InvoiceInsertQuery(db, input.Payment, customerInsertQuery.GetResult(), input.PetId);
-                invoiceInsertQuery.RunQuery();
+               await invoiceInsertQuery.RunQuery();
 
                 PaymentInsertQuery paymentInsertQuery = new PaymentInsertQuery(db, invoiceInsertQuery.GetResult(), input.Payment.PaymentMethod, input.Payment.DepositAmount);
-                paymentInsertQuery.RunQuery();
+                await paymentInsertQuery.RunQuery();
 
                 if (paymentInsertQuery.GetResult() == "ok")
                 {
@@ -48,11 +48,11 @@ namespace PetManager.Controllers.PostControllers
                     //return Ok();
 
                     GenerateInvoicePDF generateInvoicePDF = new GenerateInvoicePDF(viewRenderService, customerInsertQuery.GetResult(), input.PetId, invoiceInsertQuery.GetResult());
-                    var pdfdoc = generateInvoicePDF.Execute();
+                    var pdfdoc =await  generateInvoicePDF.Execute();
 
                     string fileName = "Invoice_" + invoiceInsertQuery.GetResult().ToString();
 
-                    return File(pdfdoc.BinaryData, "application/pdf", fileName);
+                    return  File(pdfdoc.BinaryData, "application/pdf", fileName);
                 }
                 else
                 {

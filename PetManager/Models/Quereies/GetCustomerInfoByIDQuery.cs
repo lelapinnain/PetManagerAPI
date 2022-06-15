@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetCustomerInfoByIDQuery : AbstractQuery<Customer>
     {
@@ -15,9 +17,10 @@
             customer = null;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            customer = db.Customers.Where(w => w.CustomerId == customerId).SingleOrDefault();
+            customer = await db.Customers.Where(w => w.CustomerId == customerId).SingleOrDefaultAsync();
+            return ("");
         }
 
         public override Customer GetResult()

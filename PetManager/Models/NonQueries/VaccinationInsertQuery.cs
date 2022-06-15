@@ -13,7 +13,7 @@ namespace PetManager.Models.NonQueries
             addVaccinationInputDTO = _addVaccinationInputDTO;
             db = new CoreDbContext();
         }
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
             try
             {
@@ -28,7 +28,7 @@ namespace PetManager.Models.NonQueries
 
                 };
                 db.Add(vaccineHistory);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 response = "ok";
             }
             catch (Exception ex)
@@ -36,6 +36,7 @@ namespace PetManager.Models.NonQueries
 
                 response = ex.Message;
             }
+            return response;
         }
         public override string GetResult()
         {

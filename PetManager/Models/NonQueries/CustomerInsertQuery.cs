@@ -19,7 +19,7 @@ namespace PetManager.Models.NonQueries
            return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             if (customer != null)
             {
@@ -33,9 +33,10 @@ namespace PetManager.Models.NonQueries
                 };
 
                 db.Add(customerDB);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
                 response = customerDB.CustomerId;
             }
+            return ("");
         }
     }
 }

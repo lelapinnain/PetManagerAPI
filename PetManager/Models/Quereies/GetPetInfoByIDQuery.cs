@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetPetInfoByIDQuery : AbstractQuery<PetInfo>
     {
@@ -15,9 +17,10 @@
             petInfo = null;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            petInfo = db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefault();
+            petInfo = await db.PetInfos.Where(pet => pet.PetId == petId).SingleOrDefaultAsync();
+            return ("");
         }
 
         public override PetInfo GetResult()

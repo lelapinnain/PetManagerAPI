@@ -1,4 +1,5 @@
-﻿using PetManager.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PetManager.Models;
 
 namespace PetManager.Utilities
 {
@@ -18,9 +19,9 @@ namespace PetManager.Utilities
             vaccineHistories = new List<VaccineHistory>();
         }
 
-        public List<VaccineHistory> Execute()
+        public async Task<List<VaccineHistory>> Execute()
         {
-            vaccineHistories = db.VaccineHistories.Where(w => w.PetInfoId == petId && w.VaccineId == vaccineId).OrderByDescending(od => od.VaccineDate).ToList();
+            vaccineHistories = await db.VaccineHistories.Where(w => w.PetInfoId == petId && w.VaccineId == vaccineId).OrderByDescending(od => od.VaccineDate).ToListAsync();
             return vaccineHistories;
         }
     }

@@ -10,7 +10,7 @@ namespace PetManager.Controllers.PostControllers
     {
         [Authorize]
         [Route("PetManager/PostponeVaccine")]
-        public override IActionResult Post([FromBody] GetPetInfoInputDTO input)
+        public async override Task<IActionResult> Post([FromBody] GetPetInfoInputDTO input)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace PetManager.Controllers.PostControllers
                 }
 
                 PostponeVaccineQuery postponeVaccineQuery = new PostponeVaccineQuery(input.PetId);
-                postponeVaccineQuery.RunQuery();
+               await postponeVaccineQuery.RunQuery();
 
                     if (postponeVaccineQuery.GetResult() == "ok")
                     {

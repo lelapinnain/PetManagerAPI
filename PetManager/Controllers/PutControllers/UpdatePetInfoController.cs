@@ -14,7 +14,7 @@ namespace PetManager.Controllers.PutControllers
         {
         [Authorize]
         [Route("PetManager/UpdatePetInfo")]
-            public override IActionResult Put([FromBody] UpdatePetInfoDTO input)
+            public override async Task< IActionResult> Put([FromBody] UpdatePetInfoDTO input)
             {
 
             try
@@ -25,7 +25,7 @@ namespace PetManager.Controllers.PutControllers
                     throw new ArgumentException();
                 }
                 UpdatePetInfoByIDQuery updatePetInfoByIDQuery = new UpdatePetInfoByIDQuery(input);
-                updatePetInfoByIDQuery.RunQuery();
+                await updatePetInfoByIDQuery.RunQuery();
 
                 UpdatePetInfoByIDMapper UpdatePetInfoMapper = new UpdatePetInfoByIDMapper(updatePetInfoByIDQuery.GetResult());
                 UpdatePetInfoDTO updatePetInfoOutputDTO = UpdatePetInfoMapper.GetMappedDTO();

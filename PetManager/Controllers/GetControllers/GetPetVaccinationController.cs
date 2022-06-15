@@ -11,7 +11,7 @@ namespace PetManager.Controllers.GetControllers
     {
         [Authorize]
         [Route("PetManager/VaccinationInfo")]
-        public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
+        public override async Task< IActionResult >Get([FromQuery] GetPetInfoInputDTO input)
         {
            // return Ok();
             try
@@ -22,7 +22,7 @@ namespace PetManager.Controllers.GetControllers
                     throw new ArgumentException();
                 }
                 GetPetInfoVaccinationQuery getPetInfoVaccinationQuery = new GetPetInfoVaccinationQuery(input.PetId);
-                getPetInfoVaccinationQuery.RunQuery();
+                await getPetInfoVaccinationQuery.RunQuery();
 
                 List<VaccinationView> vaccinations = getPetInfoVaccinationQuery.GetResult();
 

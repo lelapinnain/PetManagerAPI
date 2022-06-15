@@ -10,7 +10,7 @@ namespace PetManager.Controllers.GetControllers
     {
         [Authorize]
         [Route("PetManager/GetInvoiceDetails")]
-        public override IActionResult Get([FromQuery] int id)
+        public override async Task< IActionResult> Get([FromQuery] int id)
         {
             // return Ok();
             try
@@ -21,7 +21,7 @@ namespace PetManager.Controllers.GetControllers
                     throw new ArgumentException();
                 }
                 GetInvoiceDetailsByIDQuery getInvoiceDetailsByIDQuery = new GetInvoiceDetailsByIDQuery(id);
-                getInvoiceDetailsByIDQuery.RunQuery();
+               await getInvoiceDetailsByIDQuery.RunQuery();
 
                 
 

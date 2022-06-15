@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetDailyDappvQuery : AbstractQuery<List<DailyVaccineRecord>>
     {
@@ -14,9 +16,9 @@
             dailyVaccinesList = new List<DailyVaccineRecord>();
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {   
-            DappvList = db.DappvViews.ToList();
+            DappvList = await db.DappvViews.ToListAsync();
 
             foreach (var dappvRecord in DappvList)
             {
@@ -29,6 +31,7 @@
 
                 dailyVaccinesList.Add(dailyVaccineRecord);
             }
+            return ("");
         }
 
         public override List<DailyVaccineRecord> GetResult()

@@ -4,6 +4,6 @@ namespace PetManager.DailyVaccines
 {
     public interface IDailyVaccines
     {
-        List<DailyVaccineRecord> GetDailyVaccines();
+        Task<List<DailyVaccineRecord>> GetDailyVaccines();
     }
 }

@@ -17,7 +17,7 @@ namespace PetManager.Models.NonQueries
             db = new CoreDbContext();
 
         }
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace PetManager.Models.NonQueries
                     Breed = addPetInfoInputDto.Breed,
                 };
                 db.Add(petInfo);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
 
                 response = "ok";
             }
@@ -42,7 +42,7 @@ namespace PetManager.Models.NonQueries
 
                 response = ex.Message;
             }
-        
+        return response;
         }
         public override string GetResult()
         {

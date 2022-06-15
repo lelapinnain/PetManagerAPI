@@ -1,4 +1,6 @@
-﻿namespace PetManager.Models.Quereies
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PetManager.Models.Quereies
 {
     public class GetPetInfoDewormingQuery : AbstractQuery<List<DewormingView>>
     {
@@ -17,9 +19,10 @@
             return dewormingList;
         }
 
-        public override void RunQuery()
+        public async override Task<string> RunQuery()
         {
-            dewormingList = db.DewormingViews.Where(w => w.PetInfoId == petId).ToList();
+            dewormingList = await db.DewormingViews.Where(w => w.PetInfoId == petId).ToListAsync();
+            return ("");
         }
     }
 }

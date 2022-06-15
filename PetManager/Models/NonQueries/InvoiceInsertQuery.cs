@@ -23,7 +23,7 @@ namespace PetManager.Models.NonQueries
            return response;
         }
 
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             if (payment != null)
             {
@@ -46,9 +46,10 @@ namespace PetManager.Models.NonQueries
                 };
 
                 db.Add(invoice);
-                db.SaveChanges();
+               await db.SaveChangesAsync();
                 response = invoice.InvoiceId;
             }
+            return ("");
         }
     }
 }

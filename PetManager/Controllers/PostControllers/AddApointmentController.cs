@@ -10,7 +10,7 @@ namespace PetManager.Controllers.PostControllers
     [Route("PetManager/AddAppointment")]
     public class AddApointmentController : AbstractControllerPost<AppointmentInputDTO>
     {
-        public override IActionResult Post([FromBody] AppointmentInputDTO input)
+        public async override Task<IActionResult> Post([FromBody] AppointmentInputDTO input)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace PetManager.Controllers.PostControllers
                     throw new ArgumentException();
                 }
                 AppointmentInsertQuery appointmentInsertQuery = new AppointmentInsertQuery(input);
-                appointmentInsertQuery.RunQuery();
+                await appointmentInsertQuery.RunQuery();
 
                 if (appointmentInsertQuery.GetResult() == "ok")
 

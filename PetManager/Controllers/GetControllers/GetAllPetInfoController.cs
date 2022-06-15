@@ -11,10 +11,10 @@ namespace PetManager.Controllers.GetControllers
     {
         [Authorize]
         [Route("PetManager/GetAllPetInfo")]
-        public override IActionResult Get()
+        public async override Task<IActionResult> Get()
         {
             GetAllPetInfoQuery getAllPetInfoQuery = new GetAllPetInfoQuery();
-            getAllPetInfoQuery.RunQuery();
+            await getAllPetInfoQuery.RunQuery();
 
             GetAllPetInfoMapper getAllPetInfoMapper = new GetAllPetInfoMapper(getAllPetInfoQuery.GetResult());
             List<GetPetInfoOutputDTO> getPetInfoOutputDTOList = getAllPetInfoMapper.GetMappedDTO();

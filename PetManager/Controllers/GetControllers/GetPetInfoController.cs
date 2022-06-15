@@ -13,7 +13,7 @@ namespace PetManager.Controllers.GetControllers
     {
         [Authorize]
         [Route("PetManager/GetPetInfo")]
-        public override IActionResult Get([FromQuery] GetPetInfoInputDTO input)
+        public override async Task< IActionResult> Get([FromQuery] GetPetInfoInputDTO input)
         {
             try
             {
@@ -23,13 +23,13 @@ namespace PetManager.Controllers.GetControllers
                     throw new ArgumentException();
                 }
                 GetPetInfoByIDQuery getPetInfoByIDQuery = new GetPetInfoByIDQuery(input.PetId);
-                getPetInfoByIDQuery.RunQuery();
+                await getPetInfoByIDQuery.RunQuery();
 
                 GetPetInfoVaccinationQuery getPetInfoVaccinationQuery = new GetPetInfoVaccinationQuery(input.PetId);
-                getPetInfoVaccinationQuery.RunQuery();
+               await getPetInfoVaccinationQuery.RunQuery();
 
                 GetPetInfoDewormingQuery getPetInfoDewormingQuery = new GetPetInfoDewormingQuery(input.PetId);
-                getPetInfoDewormingQuery.RunQuery();
+               await getPetInfoDewormingQuery.RunQuery();
 
                 GetPetInfoByIDMapper getPetInfoByIDMapper = new GetPetInfoByIDMapper(getPetInfoByIDQuery.GetResult(), getPetInfoVaccinationQuery.GetResult(), getPetInfoDewormingQuery.GetResult());
                 GetPetInfoOutputDTO getPetInfoOutputDTO = getPetInfoByIDMapper.GetMappedDTO();

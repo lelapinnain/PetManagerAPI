@@ -1,4 +1,5 @@
-﻿using PetManager.DTOs.InputDTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using PetManager.DTOs.InputDTOs;
 
 namespace PetManager.Models.NonQueries
 {
@@ -25,11 +26,11 @@ namespace PetManager.Models.NonQueries
             return response;
 
         }
-        public override void RunQuery()
+        public override async Task<string> RunQuery()
         {
             try
             {
-                vaccineHistory = db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccinationId).SingleOrDefault();
+                vaccineHistory =await db.VaccineHistories.Where(v => v.VaccineHistoryId == vaccinationId).SingleOrDefaultAsync();
                 if (vaccineHistory != null)
                 {
                     vaccineHistory.VaccineId = addVaccinationInputDTO.VaccinationId;
@@ -37,7 +38,7 @@ namespace PetManager.Models.NonQueries
                     vaccineHistory.Notes = addVaccinationInputDTO.Notes;
 
                     db.Update(vaccineHistory);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     response = "ok";
 
@@ -53,7 +54,7 @@ namespace PetManager.Models.NonQueries
 
                response = ex.Message;
             }
-          
+          return response;
 
         }
     }
