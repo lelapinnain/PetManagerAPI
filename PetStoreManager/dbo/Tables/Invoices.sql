@@ -9,6 +9,7 @@
     [Tax]                DECIMAL (18, 2) NULL,
     [PriceAfterTax]      DECIMAL (18, 2) NULL,
     [DepositAmount]      DECIMAL (18, 2) NULL,
+    [PaidAmount]         DECIMAL (18, 2) NULL,
     [RemainingBalance]   DECIMAL (18, 2) NULL,
     [DateOfPurchase]     DATETIME        NOT NULL,
     [PickupDate]         DATETIME        NULL,
@@ -18,4 +19,6 @@
     CONSTRAINT [FK_Invoices_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customers] ([CustomerId]),
     CONSTRAINT [FK_Invoices_PetInfo] FOREIGN KEY ([PetinfoId]) REFERENCES [dbo].[PetInfo] ([PetId])
 );
+
+
 
