@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetManager", "PetManager\PetManager.csproj", "{0E10ABBC-0D9D-4939-AD17-987F6518B1B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetManager", "PetManager\PetManager.csproj", "{0E10ABBC-0D9D-4939-AD17-987F6518B1B0}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PetStoreManager", "PetStoreManager\PetStoreManager.sqlproj", "{94758444-C65E-4AB0-B289-32844FAC778F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{0E10ABBC-0D9D-4939-AD17-987F6518B1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E10ABBC-0D9D-4939-AD17-987F6518B1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E10ABBC-0D9D-4939-AD17-987F6518B1B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94758444-C65E-4AB0-B289-32844FAC778F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
